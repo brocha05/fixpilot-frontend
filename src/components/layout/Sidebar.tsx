@@ -10,10 +10,12 @@ import {
   Settings,
   ChevronLeft,
   ChevronRight,
-  Zap,
+  Wrench,
   FolderOpen,
   Shield,
   BarChart3,
+  Receipt,
+  UserCircle,
 } from 'lucide-react';
 import { useState } from 'react';
 import { cn } from '@/lib/utils/cn';
@@ -90,22 +92,29 @@ export function Sidebar() {
 
   const userNavGroups: NavGroup[] = [
     {
-      label: 'Overview',
-      items: [{ href: '/dashboard', label: 'Dashboard', icon: LayoutDashboard, exact: true }],
+      label: 'Principal',
+      items: [{ href: '/dashboard', label: 'Panel', icon: LayoutDashboard, exact: true }],
     },
     {
-      label: 'Workspace',
+      label: 'Taller',
       items: [
-        { href: '/dashboard/users', label: 'Users', icon: Users },
-        { href: '/dashboard/files', label: 'Files', icon: FolderOpen },
+        { href: '/orders', label: 'Órdenes', icon: Wrench },
+        { href: '/customers', label: 'Clientes', icon: UserCircle },
+        { href: '/expenses', label: 'Gastos', icon: Receipt },
       ],
     },
     {
-      label: 'Account',
+      label: 'Reportes',
+      items: [{ href: '/analytics', label: 'Estadísticas', icon: BarChart3 }],
+    },
+    {
+      label: 'Cuenta',
       items: [
-        { href: '/dashboard/billing', label: 'Billing', icon: CreditCard },
-        { href: '/dashboard/company', label: 'Company', icon: Building2 },
-        { href: '/dashboard/settings', label: 'Settings', icon: Settings },
+        { href: '/dashboard/billing', label: 'Suscripción', icon: CreditCard },
+        { href: '/dashboard/company', label: 'Empresa', icon: Building2 },
+        { href: '/dashboard/files', label: 'Archivos', icon: FolderOpen },
+        { href: '/dashboard/users', label: 'Equipo', icon: Users },
+        { href: '/dashboard/settings', label: 'Ajustes', icon: Settings },
       ],
     },
   ];
@@ -114,9 +123,9 @@ export function Sidebar() {
     {
       label: 'Admin',
       items: [
-        { href: '/admin/dashboard', label: 'Overview', icon: BarChart3, exact: true },
-        { href: '/admin/companies', label: 'Companies', icon: Building2 },
-        { href: '/admin/subscriptions', label: 'Subscriptions', icon: CreditCard },
+        { href: '/admin/dashboard', label: 'Resumen', icon: BarChart3, exact: true },
+        { href: '/admin/companies', label: 'Empresas', icon: Building2 },
+        { href: '/admin/subscriptions', label: 'Suscripciones', icon: CreditCard },
       ],
     },
   ];
@@ -136,12 +145,12 @@ export function Sidebar() {
           className={cn('flex items-center gap-3 overflow-hidden', collapsed && 'justify-center')}
         >
           <div className="flex h-8 w-8 shrink-0 items-center justify-center rounded-xl bg-primary shadow-sm">
-            <Zap className="h-4 w-4 text-primary-foreground" />
+            <Wrench className="h-4 w-4 text-primary-foreground" />
           </div>
           {!collapsed && (
             <div className="min-w-0">
               <p className="truncate text-sm font-semibold tracking-tight">
-                {process.env.NEXT_PUBLIC_APP_NAME ?? 'SaaS App'}
+                {process.env.NEXT_PUBLIC_APP_NAME ?? 'FixPilot'}
               </p>
               {isSuperAdmin && <p className="text-[10px] font-medium text-primary">Super Admin</p>}
             </div>
@@ -166,17 +175,15 @@ export function Sidebar() {
         ))}
       </nav>
 
-      {/* Security badge for super admin */}
       {!collapsed && isSuperAdmin && (
         <div className="border-t p-3">
           <div className="flex items-center gap-2 rounded-lg bg-primary/5 px-3 py-2">
             <Shield className="h-3.5 w-3.5 text-primary" />
-            <span className="text-xs font-medium text-primary">Super Admin Mode</span>
+            <span className="text-xs font-medium text-primary">Modo Super Admin</span>
           </div>
         </div>
       )}
 
-      {/* User email at bottom */}
       {!collapsed && !isSuperAdmin && user && (
         <div className="border-t p-3">
           <Link
@@ -197,13 +204,12 @@ export function Sidebar() {
         </div>
       )}
 
-      {/* Collapse toggle */}
       <Button
         variant="ghost"
         size="icon"
         onClick={() => setCollapsed((v) => !v)}
         className="absolute -right-3 top-[72px] z-10 h-6 w-6 rounded-full border bg-background shadow-sm hover:bg-accent"
-        aria-label={collapsed ? 'Expand sidebar' : 'Collapse sidebar'}
+        aria-label={collapsed ? 'Expandir menú' : 'Colapsar menú'}
       >
         {collapsed ? <ChevronRight className="h-3 w-3" /> : <ChevronLeft className="h-3 w-3" />}
       </Button>

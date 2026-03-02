@@ -8,9 +8,18 @@ const PUBLIC_ROUTES = [
   '/forgot-password',
   '/reset-password',
   '/accept-invite',
+  '/track', // public order tracking — no auth required
 ];
 const AUTH_ROUTES = ['/login', '/register'];
-const PROTECTED_PREFIXES = ['/dashboard', '/admin'];
+const PROTECTED_PREFIXES = [
+  '/dashboard',
+  '/admin',
+  '/orders',
+  '/customers',
+  '/analytics',
+  '/expenses',
+  '/settings',
+];
 
 function getTokenFromRequest(request: NextRequest): string | null {
   return request.cookies.get('access-token')?.value ?? null;

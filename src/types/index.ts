@@ -11,7 +11,7 @@ export interface PaginatedResponse<T> {
   total: number;
   page: number;
   limit: number;
-  totalPages: number;
+  pages: number;
 }
 
 export interface ApiError {
@@ -77,7 +77,7 @@ export interface Plan {
   stripePriceId: string;
   stripeProductId: string;
   interval: PlanInterval;
-  price: number; // in cents
+  price: number;
   currency: string;
   isActive: boolean;
   features: string[];
@@ -143,24 +143,147 @@ export interface FileRecord {
   uploadedBy?: Pick<User, 'id' | 'firstName' | 'lastName' | 'email'>;
 }
 
-// ─── Usage ────────────────────────────────────────────────────────────────────
+// ─── Repair Management ────────────────────────────────────────────────────────
 
-export interface UsageStats {
-  users: { used: number; limit: number };
-  storage: { used: number; limit: number };
-  apiCalls: { used: number; limit: number };
-  period: { start: string; end: string };
+export type RepairStatus =
+  | 'PENDING'
+  | 'DIAGNOSED'
+  | 'WAITING_APPROVAL'
+  | 'APPROVED'
+  | 'IN_PROGRESS'
+  | 'WAITING_PARTS'
+  | 'COMPLETED'
+  | 'DELIVERED'
+  | 'CANCELLED';
+
+export type UrgencyLevel = 'LOW' | 'NORMAL' | 'HIGH' | 'URGENT';
+
+export type ExpenseCategory =
+  | 'PARTS'
+  | 'TOOLS'
+  | 'SHIPPING'
+  | 'UTILITIES'
+  | 'SALARIES'
+  | 'RENT'
+  | 'MARKETING'
+  | 'OTHER';
+
+export interface Customer {
+  id: string;
+  companyId: string;
+  name: string;
+  phone: string;
+  email: string | null;
+  createdAt: string;
 }
 
-// ─── Onboarding ───────────────────────────────────────────────────────────────
-
-export interface OnboardingStep {
-  step: string;
-  completed: boolean;
-  completedAt?: string;
+export interface RepairOrderImage {
+  id: string;
+  fileKey: string;
 }
 
-export interface OnboardingStatus {
-  completed: boolean;
-  steps: OnboardingStep[];
+export interface RepairOrderComment {
+  id: string;
+  message: string;
+  internal: boolean;
+  authorName: string | null;
+  createdAt: string;
+}
+
+export interface RepairOrderStatusHistory {
+  id: string;
+  previousStatus: RepairStatus | null;
+  newStatus: RepairStatus;
+  timestamp: string;
+}
+
+export interface RepairOrderCustomer {
+  id: string;
+  name: string;
+  phone: string;
+  email: string | null;
+}
+
+export interface RepairOrder {
+  id: string;
+  companyId: string;
+  customerId: string;
+  deviceModel: string;
+  issueDescription: string;
+  status: RepairStatus;
+  urgencyLevel: UrgencyLevel;
+  costEstimate: number | null;
+  finalPrice: number | null;
+  isApproved: boolean;
+  publicTrackingToken: string;
+  createdAt: string;
+  updatedAt: string;
+  completedAt: string | null;
+  approvedAt: string | null;
+  customer?: RepairOrderCustomer | null;
+  images?: RepairOrderImage[];
+  comments?: RepairOrderComment[];
+  statusHistory?: RepairOrderStatusHistory[];
+}
+
+export interface Expense {
+  id: string;
+  companyId: string;
+  description: string;
+  amount: number;
+  category: ExpenseCategory;
+  createdAt: string;
+}
+
+// ─── Analytics ────────────────────────────────────────────────────────────────
+
+export interface RevenueSummary {
+  totalRevenue: number;
+  pendingRevenue: number;
+  period: { year: number; month?: number };
+}
+
+export interface RepairStats {
+  total: number;
+  byStatus: Record<RepairStatus, number>;
+  completed: number;
+  avgRepairTimeHours: number | null;
+}
+
+export interface ExpenseSummary {
+  totalExpenses: number;
+  byCategory: Record<string, number>;
+  period: { year: number; month?: number };
+}
+
+export interface DashboardSummary {
+  revenue: RevenueSummary;
+  repairs: RepairStats;
+  expenses: ExpenseSummary;
+  netProfit: number;
+}
+
+// ─── Public Tracking ──────────────────────────────────────────────────────────
+
+export interface PublicStatusHistory {
+  status: RepairStatus;
+  statusLabel: string;
+  timestamp: string;
+}
+
+export interface PublicTrackingData {
+  deviceModel: string;
+  issueDescription: string;
+  status: RepairStatus;
+  statusLabel: string;
+  urgencyLevel: UrgencyLevel;
+  urgencyLabel: string;
+  createdAt: string;
+  updatedAt: string;
+  completedAt: string | null;
+  costEstimate: number | null;
+  finalPrice: number | null;
+  customer: { name: string };
+  statusHistory: PublicStatusHistory[];
+  publicComments: { message: string; createdAt: string }[];
 }

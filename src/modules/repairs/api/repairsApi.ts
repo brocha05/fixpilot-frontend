@@ -14,8 +14,7 @@ export const repairsApi = {
 
   getById: (id: string) => apiClient.get<RepairOrder>(`/repair-orders/${id}`),
 
-  create: (data: CreateRepairOrderRequest) =>
-    apiClient.post<RepairOrder>('/repair-orders', data),
+  create: (data: CreateRepairOrderRequest) => apiClient.post<RepairOrder>('/repair-orders', data),
 
   update: (id: string, data: UpdateRepairOrderRequest) =>
     apiClient.patch<RepairOrder>(`/repair-orders/${id}`, data),

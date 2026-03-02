@@ -208,7 +208,7 @@ export default function DashboardPage() {
           <div>
             <p className="text-xs text-muted-foreground">Completadas totales</p>
             <p className="text-2xl font-bold">
-              {summaryLoading ? '—' : summary?.repairs.completed ?? 0}
+              {summaryLoading ? '—' : (summary?.repairs.completed ?? 0)}
             </p>
           </div>
         </Card>
@@ -223,8 +223,8 @@ export default function DashboardPage() {
               {summaryLoading
                 ? '—'
                 : summary?.repairs.avgRepairTimeHours != null
-                ? `${summary.repairs.avgRepairTimeHours}h`
-                : '—'}
+                  ? `${summary.repairs.avgRepairTimeHours}h`
+                  : '—'}
             </p>
           </div>
         </Card>

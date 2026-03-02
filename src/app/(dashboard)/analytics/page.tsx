@@ -30,13 +30,33 @@ const CURRENT_YEAR = new Date().getFullYear();
 const CURRENT_MONTH = new Date().getMonth() + 1;
 
 const MONTHS_SHORT = [
-  'Ene', 'Feb', 'Mar', 'Abr', 'May', 'Jun',
-  'Jul', 'Ago', 'Sep', 'Oct', 'Nov', 'Dic',
+  'Ene',
+  'Feb',
+  'Mar',
+  'Abr',
+  'May',
+  'Jun',
+  'Jul',
+  'Ago',
+  'Sep',
+  'Oct',
+  'Nov',
+  'Dic',
 ];
 
 const MONTHS_FULL = [
-  'Enero', 'Febrero', 'Marzo', 'Abril', 'Mayo', 'Junio',
-  'Julio', 'Agosto', 'Septiembre', 'Octubre', 'Noviembre', 'Diciembre',
+  'Enero',
+  'Febrero',
+  'Marzo',
+  'Abril',
+  'Mayo',
+  'Junio',
+  'Julio',
+  'Agosto',
+  'Septiembre',
+  'Octubre',
+  'Noviembre',
+  'Diciembre',
 ];
 
 const STATUS_BAR_COLORS: Record<RepairStatus, string> = {
@@ -63,8 +83,14 @@ const EXPENSE_CATEGORY_LABELS: Record<ExpenseCategory, string> = {
 };
 
 const EXPENSE_COLORS = [
-  'bg-blue-500', 'bg-indigo-500', 'bg-violet-500', 'bg-amber-500',
-  'bg-orange-500', 'bg-red-500', 'bg-emerald-500', 'bg-slate-400',
+  'bg-blue-500',
+  'bg-indigo-500',
+  'bg-violet-500',
+  'bg-amber-500',
+  'bg-orange-500',
+  'bg-red-500',
+  'bg-emerald-500',
+  'bg-slate-400',
 ];
 
 export default function AnalyticsPage() {
@@ -108,10 +134,7 @@ export default function AnalyticsPage() {
     <div className="space-y-8">
       {/* Header + period filter */}
       <div className="flex flex-wrap items-start justify-between gap-4">
-        <PageHeader
-          title="Estadísticas"
-          description="Resumen financiero y operativo del taller."
-        />
+        <PageHeader title="Estadísticas" description="Resumen financiero y operativo del taller." />
         <div className="flex items-center gap-2">
           <Select value={month} onValueChange={setMonth}>
             <SelectTrigger className="w-[150px]">
@@ -280,8 +303,7 @@ export default function AnalyticsPage() {
                 {(Object.entries(expensesByCategory) as [string, number][])
                   .sort(([, a], [, b]) => b - a)
                   .map(([cat, amount], idx) => {
-                    const pct =
-                      totalExpenses > 0 ? Math.round((amount / totalExpenses) * 100) : 0;
+                    const pct = totalExpenses > 0 ? Math.round((amount / totalExpenses) * 100) : 0;
                     const label = EXPENSE_CATEGORY_LABELS[cat as ExpenseCategory] ?? cat;
                     const color = EXPENSE_COLORS[idx % EXPENSE_COLORS.length];
                     return (
@@ -318,7 +340,7 @@ export default function AnalyticsPage() {
             <div>
               <p className="text-xs text-muted-foreground">Completadas totales</p>
               <p className="text-2xl font-bold">
-                {summaryLoading ? '—' : summary?.repairs.completed ?? 0}
+                {summaryLoading ? '—' : (summary?.repairs.completed ?? 0)}
               </p>
             </div>
           </div>
@@ -334,8 +356,8 @@ export default function AnalyticsPage() {
                 {summaryLoading
                   ? '—'
                   : summary?.repairs.avgRepairTimeHours != null
-                  ? `${summary.repairs.avgRepairTimeHours}h`
-                  : '—'}
+                    ? `${summary.repairs.avgRepairTimeHours}h`
+                    : '—'}
               </p>
             </div>
           </div>

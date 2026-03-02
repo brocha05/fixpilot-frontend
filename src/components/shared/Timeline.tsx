@@ -49,9 +49,7 @@ export function Timeline({ items, className }: TimelineProps) {
         return (
           <li key={index} className="relative flex gap-4 pb-6 last:pb-0">
             {/* Vertical line */}
-            {!isLast && (
-              <div className="absolute left-[15px] top-8 bottom-0 w-px bg-border" />
-            )}
+            {!isLast && <div className="absolute left-[15px] top-8 bottom-0 w-px bg-border" />}
 
             {/* Dot */}
             <div

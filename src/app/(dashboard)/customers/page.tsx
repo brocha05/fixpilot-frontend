@@ -47,7 +47,7 @@ export default function CustomersPage() {
   const { mutate: updateCustomer, isPending: updating } = useUpdateCustomer();
   const { mutate: deleteCustomerMutation, isPending: deleting } = useDeleteCustomer();
 
-  const customers = data?.data ?? [];
+  const customers = data?.items ?? [];
   const total = data?.total ?? 0;
   const pages = data?.pages ?? 1;
 
@@ -69,7 +69,10 @@ export default function CustomersPage() {
   const handleEdit = (values: CustomerFormValues) => {
     if (!editCustomer) return;
     updateCustomer(
-      { id: editCustomer.id, data: { name: values.name, phone: values.phone, email: values.email || undefined } },
+      {
+        id: editCustomer.id,
+        data: { name: values.name, phone: values.phone, email: values.email || undefined },
+      },
       {
         onSuccess: () => {
           setEditCustomer(null);
@@ -91,7 +94,11 @@ export default function CustomersPage() {
     editForm.reset({ name: c.name, phone: c.phone, email: c.email ?? '' });
   };
 
-  const CustomerFormFields = ({ form }: { form: ReturnType<typeof useForm<CustomerFormValues>> }) => (
+  const CustomerFormFields = ({
+    form,
+  }: {
+    form: ReturnType<typeof useForm<CustomerFormValues>>;
+  }) => (
     <div className="space-y-4">
       <div className="space-y-1.5">
         <Label>Nombre completo *</Label>
@@ -136,7 +143,10 @@ export default function CustomersPage() {
         <Input
           placeholder="Buscar por nombre, teléfono o correo..."
           value={search}
-          onChange={(e) => { setSearch(e.target.value); setPage(1); }}
+          onChange={(e) => {
+            setSearch(e.target.value);
+            setPage(1);
+          }}
           className="pl-9"
         />
       </div>
@@ -192,9 +202,7 @@ export default function CustomersPage() {
                     </div>
                     <div className="min-w-0">
                       <p className="truncate text-sm font-medium">{c.name}</p>
-                      <p className="truncate text-xs text-muted-foreground md:hidden">
-                        {c.phone}
-                      </p>
+                      <p className="truncate text-xs text-muted-foreground md:hidden">{c.phone}</p>
                     </div>
                   </div>
 
@@ -250,12 +258,24 @@ export default function CustomersPage() {
       {/* Pagination */}
       {pages > 1 && (
         <div className="flex items-center justify-between text-sm text-muted-foreground">
-          <span>Página {page} de {pages}</span>
+          <span>
+            Página {page} de {pages}
+          </span>
           <div className="flex gap-2">
-            <Button variant="outline" size="sm" disabled={page <= 1} onClick={() => setPage((p) => p - 1)}>
+            <Button
+              variant="outline"
+              size="sm"
+              disabled={page <= 1}
+              onClick={() => setPage((p) => p - 1)}
+            >
               Anterior
             </Button>
-            <Button variant="outline" size="sm" disabled={page >= pages} onClick={() => setPage((p) => p + 1)}>
+            <Button
+              variant="outline"
+              size="sm"
+              disabled={page >= pages}
+              onClick={() => setPage((p) => p + 1)}
+            >
               Siguiente
             </Button>
           </div>
@@ -263,7 +283,13 @@ export default function CustomersPage() {
       )}
 
       {/* Create Dialog */}
-      <Dialog open={createOpen} onOpenChange={(open) => { setCreateOpen(open); if (!open) createForm.reset(); }}>
+      <Dialog
+        open={createOpen}
+        onOpenChange={(open) => {
+          setCreateOpen(open);
+          if (!open) createForm.reset();
+        }}
+      >
         <DialogContent>
           <DialogHeader>
             <DialogTitle>Registrar nuevo cliente</DialogTitle>
@@ -306,8 +332,8 @@ export default function CustomersPage() {
           </DialogHeader>
           <p className="text-sm text-muted-foreground">
             ¿Estás seguro de eliminar a{' '}
-            <span className="font-medium text-foreground">{deleteCustomer?.name}</span>? Esta
-            acción no se puede deshacer.
+            <span className="font-medium text-foreground">{deleteCustomer?.name}</span>? Esta acción
+            no se puede deshacer.
           </p>
           <DialogFooter>
             <Button variant="outline" onClick={() => setDeleteCustomer(null)}>

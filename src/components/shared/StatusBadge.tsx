@@ -53,7 +53,13 @@ export function StatusBadge({ status, size = 'md', showDot = true, className }: 
       )}
     >
       {showDot && (
-        <span className={cn('rounded-full shrink-0', STATUS_DOT[status], size === 'lg' ? 'h-2 w-2' : 'h-1.5 w-1.5')} />
+        <span
+          className={cn(
+            'rounded-full shrink-0',
+            STATUS_DOT[status],
+            size === 'lg' ? 'h-2 w-2' : 'h-1.5 w-1.5'
+          )}
+        />
       )}
       {label}
     </span>

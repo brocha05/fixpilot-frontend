@@ -8,7 +8,8 @@ export const analyticsKeys = {
   summary: () => [...analyticsKeys.all, 'summary'] as const,
   revenue: (params: Record<string, unknown>) => [...analyticsKeys.all, 'revenue', params] as const,
   repairs: () => [...analyticsKeys.all, 'repairs'] as const,
-  expenses: (params: Record<string, unknown>) => [...analyticsKeys.all, 'expenses', params] as const,
+  expenses: (params: Record<string, unknown>) =>
+    [...analyticsKeys.all, 'expenses', params] as const,
 };
 
 export function useDashboardSummary() {

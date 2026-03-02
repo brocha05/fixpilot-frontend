@@ -8,7 +8,7 @@ interface RevenueCardProps {
   title: string;
   amount: number | null | undefined;
   subtitle?: string;
-  trend?: number;        // % change vs prior period
+  trend?: number; // % change vs prior period
   variant?: 'default' | 'profit' | 'loss' | 'neutral';
   isLoading?: boolean;
   className?: string;
@@ -65,17 +65,15 @@ export function RevenueCard({
                     trend > 0
                       ? 'text-emerald-600 dark:text-emerald-400'
                       : trend < 0
-                      ? 'text-red-500'
-                      : 'text-muted-foreground'
+                        ? 'text-red-500'
+                        : 'text-muted-foreground'
                   )}
                 >
                   <TrendIcon className="h-3 w-3" />
                   {Math.abs(trend)}%
                 </span>
               )}
-              {subtitle && (
-                <span className="text-xs text-muted-foreground">{subtitle}</span>
-              )}
+              {subtitle && <span className="text-xs text-muted-foreground">{subtitle}</span>}
             </div>
           </>
         )}

@@ -53,7 +53,7 @@ export default function FilesPage() {
   const { mutate: upload, isPending: uploading } = useUploadFile();
   const { mutate: deleteFile, isPending: deleting } = useDeleteFile();
 
-  const files = data?.data ?? [];
+  const files = data?.items ?? [];
 
   function handleUpload(e: React.ChangeEvent<HTMLInputElement>) {
     const file = e.target.files?.[0];

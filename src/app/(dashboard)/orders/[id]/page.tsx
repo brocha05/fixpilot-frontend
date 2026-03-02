@@ -39,10 +39,7 @@ import {
   useUpdateRepairOrder,
   useAddComment,
 } from '@/modules/repairs/hooks/useRepairs';
-import {
-  ALLOWED_TRANSITIONS,
-  REPAIR_STATUS_LABELS,
-} from '@/modules/repairs/types/repairs.types';
+import { ALLOWED_TRANSITIONS, REPAIR_STATUS_LABELS } from '@/modules/repairs/types/repairs.types';
 import { formatDate, formatDateTime } from '@/lib/utils/formatters';
 import type { RepairStatus } from '@/types';
 

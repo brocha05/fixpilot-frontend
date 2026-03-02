@@ -97,8 +97,8 @@ export default function AdminSubscriptionsPage() {
   });
 
   const active =
-    data?.data?.filter((s) => s.status === 'ACTIVE' || s.status === 'TRIALING').length ?? 0;
-  const pastDue = data?.data?.filter((s) => s.status === 'PAST_DUE').length ?? 0;
+    data?.items?.filter((s) => s.status === 'ACTIVE' || s.status === 'TRIALING').length ?? 0;
+  const pastDue = data?.items?.filter((s) => s.status === 'PAST_DUE').length ?? 0;
 
   return (
     <div className="space-y-6">
@@ -109,7 +109,7 @@ export default function AdminSubscriptionsPage() {
 
       <DataTable
         columns={columns}
-        data={data?.data ?? []}
+        data={data?.items ?? []}
         isLoading={isLoading}
         totalPages={data?.totalPages}
         currentPage={pagination.page}

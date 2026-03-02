@@ -219,7 +219,7 @@ export default function UsersPage() {
 
       <DataTable
         columns={columns}
-        data={data?.data ?? []}
+        data={data?.items ?? []}
         isLoading={isLoading}
         totalPages={data?.totalPages}
         currentPage={pagination.page}

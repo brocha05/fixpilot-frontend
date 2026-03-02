@@ -34,19 +34,52 @@ const STATUS_ICONS: Partial<Record<RepairStatus, React.ComponentType<{ className
   CANCELLED: AlertCircle,
 };
 
-const STATUS_THEME: Record<
-  RepairStatus,
-  { card: string; icon: string; dot: string }
-> = {
-  PENDING:          { card: 'border-slate-200 bg-slate-50',    icon: 'bg-slate-100 text-slate-600',    dot: 'bg-slate-400' },
-  DIAGNOSED:        { card: 'border-violet-200 bg-violet-50',  icon: 'bg-violet-100 text-violet-700',  dot: 'bg-violet-500' },
-  WAITING_APPROVAL: { card: 'border-amber-300 bg-amber-50',    icon: 'bg-amber-100 text-amber-700',    dot: 'bg-amber-500' },
-  APPROVED:         { card: 'border-blue-200 bg-blue-50',      icon: 'bg-blue-100 text-blue-700',      dot: 'bg-blue-500' },
-  IN_PROGRESS:      { card: 'border-indigo-200 bg-indigo-50',  icon: 'bg-indigo-100 text-indigo-700',  dot: 'bg-indigo-500' },
-  WAITING_PARTS:    { card: 'border-orange-200 bg-orange-50',  icon: 'bg-orange-100 text-orange-700',  dot: 'bg-orange-500' },
-  COMPLETED:        { card: 'border-emerald-300 bg-emerald-50',icon: 'bg-emerald-100 text-emerald-700',dot: 'bg-emerald-500' },
-  DELIVERED:        { card: 'border-green-300 bg-green-50',    icon: 'bg-green-100 text-green-700',    dot: 'bg-green-500' },
-  CANCELLED:        { card: 'border-red-200 bg-red-50',        icon: 'bg-red-100 text-red-600',        dot: 'bg-red-500' },
+const STATUS_THEME: Record<RepairStatus, { card: string; icon: string; dot: string }> = {
+  PENDING: {
+    card: 'border-slate-200 bg-slate-50',
+    icon: 'bg-slate-100 text-slate-600',
+    dot: 'bg-slate-400',
+  },
+  DIAGNOSED: {
+    card: 'border-violet-200 bg-violet-50',
+    icon: 'bg-violet-100 text-violet-700',
+    dot: 'bg-violet-500',
+  },
+  WAITING_APPROVAL: {
+    card: 'border-amber-300 bg-amber-50',
+    icon: 'bg-amber-100 text-amber-700',
+    dot: 'bg-amber-500',
+  },
+  APPROVED: {
+    card: 'border-blue-200 bg-blue-50',
+    icon: 'bg-blue-100 text-blue-700',
+    dot: 'bg-blue-500',
+  },
+  IN_PROGRESS: {
+    card: 'border-indigo-200 bg-indigo-50',
+    icon: 'bg-indigo-100 text-indigo-700',
+    dot: 'bg-indigo-500',
+  },
+  WAITING_PARTS: {
+    card: 'border-orange-200 bg-orange-50',
+    icon: 'bg-orange-100 text-orange-700',
+    dot: 'bg-orange-500',
+  },
+  COMPLETED: {
+    card: 'border-emerald-300 bg-emerald-50',
+    icon: 'bg-emerald-100 text-emerald-700',
+    dot: 'bg-emerald-500',
+  },
+  DELIVERED: {
+    card: 'border-green-300 bg-green-50',
+    icon: 'bg-green-100 text-green-700',
+    dot: 'bg-green-500',
+  },
+  CANCELLED: {
+    card: 'border-red-200 bg-red-50',
+    icon: 'bg-red-100 text-red-600',
+    dot: 'bg-red-500',
+  },
 };
 
 // ─── Component ────────────────────────────────────────────────────────────────
@@ -114,7 +147,6 @@ export default function TrackOrderPage() {
 
   return (
     <div className="mx-auto max-w-md px-4 py-10 space-y-5 pb-16">
-
       {/* ── Branding ────────────────────────────────────────────────────────── */}
       <div className="text-center space-y-1.5">
         <div className="flex justify-center">
@@ -168,7 +200,9 @@ export default function TrackOrderPage() {
       <Card className={`border-2 ${theme.card} dark:bg-transparent`}>
         <CardContent className="p-5">
           <div className="flex items-center gap-4">
-            <div className={`flex h-12 w-12 shrink-0 items-center justify-center rounded-xl ${theme.icon}`}>
+            <div
+              className={`flex h-12 w-12 shrink-0 items-center justify-center rounded-xl ${theme.icon}`}
+            >
               <StatusIcon className="h-6 w-6" />
             </div>
             <div>
@@ -215,7 +249,9 @@ export default function TrackOrderPage() {
                 )}
                 {order.finalPrice != null && (
                   <div className="rounded-lg bg-emerald-50 dark:bg-emerald-900/20 p-3 text-center border border-emerald-200 dark:border-emerald-800">
-                    <p className="text-[10px] text-emerald-700 dark:text-emerald-400">Precio final</p>
+                    <p className="text-[10px] text-emerald-700 dark:text-emerald-400">
+                      Precio final
+                    </p>
                     <p className="mt-0.5 text-lg font-bold text-emerald-700 dark:text-emerald-400">
                       {formatMXN(order.finalPrice)}
                     </p>
@@ -241,7 +277,9 @@ export default function TrackOrderPage() {
                   El técnico diagnosticó tu equipo y necesita tu autorización para comenzar la
                   reparación.
                   {order.costEstimate != null && (
-                    <> El costo estimado es de{' '}
+                    <>
+                      {' '}
+                      El costo estimado es de{' '}
                       <span className="font-semibold">{formatMXN(order.costEstimate)}</span>.
                     </>
                   )}
@@ -306,7 +344,9 @@ export default function TrackOrderPage() {
                       {!isLast && (
                         <div className="absolute left-[9px] top-5 bottom-0 w-px bg-border" />
                       )}
-                      <span className={`relative z-10 mt-1 h-[18px] w-[18px] shrink-0 rounded-full ${dot}`} />
+                      <span
+                        className={`relative z-10 mt-1 h-[18px] w-[18px] shrink-0 rounded-full ${dot}`}
+                      />
                       <div className="flex min-w-0 flex-1 flex-col">
                         <p className="text-sm font-semibold">{h.statusLabel}</p>
                         <p className="mt-0.5 text-xs text-muted-foreground">

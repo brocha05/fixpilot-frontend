@@ -106,7 +106,10 @@ export function BarChart({
                     'relative w-full max-w-[28px] cursor-default rounded-t-sm transition-all duration-500',
                     d.color ?? 'bg-blue-500'
                   )}
-                  style={{ height: `${primaryPct * (height / 100)}px`, minHeight: primaryPct > 0 ? 2 : 0 }}
+                  style={{
+                    height: `${primaryPct * (height / 100)}px`,
+                    minHeight: primaryPct > 0 ? 2 : 0,
+                  }}
                 >
                   {/* Tooltip on hover */}
                   <div className="pointer-events-none absolute -top-9 left-1/2 -translate-x-1/2 whitespace-nowrap rounded-md bg-popover px-2 py-1 text-xs font-medium text-popover-foreground shadow opacity-0 group-hover:opacity-100 transition-opacity z-10">

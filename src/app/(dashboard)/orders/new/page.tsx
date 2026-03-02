@@ -12,7 +12,13 @@ import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from '@/components/ui/select';
 import { useCreateRepairOrder } from '@/modules/repairs/hooks/useRepairs';
 import { useCustomers, useCreateCustomer } from '@/modules/customers/hooks/useCustomers';
 import { URGENCY_LABELS } from '@/modules/repairs/types/repairs.types';
@@ -47,7 +53,10 @@ export default function NewOrderPage() {
   const { mutate: createOrder, isPending: creating } = useCreateRepairOrder();
   const { mutate: createCustomer, isPending: creatingCustomer } = useCreateCustomer();
 
-  const form = useForm<FormValues>({ resolver: zodResolver(schema), defaultValues: { urgencyLevel: 'NORMAL' } });
+  const form = useForm<FormValues>({
+    resolver: zodResolver(schema),
+    defaultValues: { urgencyLevel: 'NORMAL' },
+  });
   const customerForm = useForm<CustomerFormValues>({ resolver: zodResolver(customerSchema) });
 
   const onCreateCustomer = (data: CustomerFormValues) => {
@@ -79,7 +88,10 @@ export default function NewOrderPage() {
             <ArrowLeft className="h-4 w-4" />
           </Link>
         </Button>
-        <PageHeader title="Nueva orden de reparación" description="Completa los datos del dispositivo y del cliente." />
+        <PageHeader
+          title="Nueva orden de reparación"
+          description="Completa los datos del dispositivo y del cliente."
+        />
       </div>
 
       <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
@@ -110,29 +122,53 @@ export default function NewOrderPage() {
                     <Label>Nombre completo *</Label>
                     <Input placeholder="Juan Pérez García" {...customerForm.register('name')} />
                     {customerForm.formState.errors.name && (
-                      <p className="text-xs text-destructive">{customerForm.formState.errors.name.message}</p>
+                      <p className="text-xs text-destructive">
+                        {customerForm.formState.errors.name.message}
+                      </p>
                     )}
                   </div>
                   <div className="space-y-1.5">
                     <Label>Teléfono (10 dígitos) *</Label>
-                    <Input placeholder="5512345678" maxLength={10} {...customerForm.register('phone')} />
+                    <Input
+                      placeholder="5512345678"
+                      maxLength={10}
+                      {...customerForm.register('phone')}
+                    />
                     {customerForm.formState.errors.phone && (
-                      <p className="text-xs text-destructive">{customerForm.formState.errors.phone.message}</p>
+                      <p className="text-xs text-destructive">
+                        {customerForm.formState.errors.phone.message}
+                      </p>
                     )}
                   </div>
                   <div className="space-y-1.5">
                     <Label>Correo electrónico (opcional)</Label>
-                    <Input type="email" placeholder="juan@email.com" {...customerForm.register('email')} />
+                    <Input
+                      type="email"
+                      placeholder="juan@email.com"
+                      {...customerForm.register('email')}
+                    />
                     {customerForm.formState.errors.email && (
-                      <p className="text-xs text-destructive">{customerForm.formState.errors.email.message}</p>
+                      <p className="text-xs text-destructive">
+                        {customerForm.formState.errors.email.message}
+                      </p>
                     )}
                   </div>
                 </div>
                 <div className="flex gap-2">
-                  <Button type="button" size="sm" onClick={customerForm.handleSubmit(onCreateCustomer)} disabled={creatingCustomer}>
+                  <Button
+                    type="button"
+                    size="sm"
+                    onClick={customerForm.handleSubmit(onCreateCustomer)}
+                    disabled={creatingCustomer}
+                  >
                     {creatingCustomer ? 'Guardando...' : 'Guardar cliente'}
                   </Button>
-                  <Button type="button" variant="ghost" size="sm" onClick={() => setShowNewCustomer(false)}>
+                  <Button
+                    type="button"
+                    variant="ghost"
+                    size="sm"
+                    onClick={() => setShowNewCustomer(false)}
+                  >
                     Cancelar
                   </Button>
                 </div>
@@ -154,7 +190,10 @@ export default function NewOrderPage() {
                       <button
                         key={c.id}
                         type="button"
-                        onClick={() => { setSelectedCustomer(c); setCustomerSearch(''); }}
+                        onClick={() => {
+                          setSelectedCustomer(c);
+                          setCustomerSearch('');
+                        }}
                         className="w-full flex items-center gap-3 px-4 py-3 text-left text-sm hover:bg-muted/40 transition-colors"
                       >
                         <div className="flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-primary/10 text-xs font-semibold text-primary">
@@ -168,9 +207,16 @@ export default function NewOrderPage() {
                     ))}
                   </div>
                 ) : customerSearch && !customersData?.data?.length ? (
-                  <p className="text-sm text-muted-foreground px-1">No se encontró ningún cliente.</p>
+                  <p className="text-sm text-muted-foreground px-1">
+                    No se encontró ningún cliente.
+                  </p>
                 ) : null}
-                <Button type="button" variant="outline" size="sm" onClick={() => setShowNewCustomer(true)}>
+                <Button
+                  type="button"
+                  variant="outline"
+                  size="sm"
+                  onClick={() => setShowNewCustomer(true)}
+                >
                   + Registrar nuevo cliente
                 </Button>
               </div>
@@ -186,9 +232,14 @@ export default function NewOrderPage() {
           <CardContent className="space-y-4">
             <div className="space-y-1.5">
               <Label>Modelo del equipo *</Label>
-              <Input placeholder="iPhone 14 Pro, Samsung Galaxy S23..." {...form.register('deviceModel')} />
+              <Input
+                placeholder="iPhone 14 Pro, Samsung Galaxy S23..."
+                {...form.register('deviceModel')}
+              />
               {form.formState.errors.deviceModel && (
-                <p className="text-xs text-destructive">{form.formState.errors.deviceModel.message}</p>
+                <p className="text-xs text-destructive">
+                  {form.formState.errors.deviceModel.message}
+                </p>
               )}
             </div>
             <div className="space-y-1.5">
@@ -200,7 +251,9 @@ export default function NewOrderPage() {
                 className="w-full resize-none rounded-md border border-input bg-background px-3 py-2 text-sm placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-ring"
               />
               {form.formState.errors.issueDescription && (
-                <p className="text-xs text-destructive">{form.formState.errors.issueDescription.message}</p>
+                <p className="text-xs text-destructive">
+                  {form.formState.errors.issueDescription.message}
+                </p>
               )}
             </div>
             <div className="grid gap-4 sm:grid-cols-2">
@@ -215,7 +268,9 @@ export default function NewOrderPage() {
                   </SelectTrigger>
                   <SelectContent>
                     {Object.entries(URGENCY_LABELS).map(([k, v]) => (
-                      <SelectItem key={k} value={k}>{v}</SelectItem>
+                      <SelectItem key={k} value={k}>
+                        {v}
+                      </SelectItem>
                     ))}
                   </SelectContent>
                 </Select>
@@ -230,7 +285,9 @@ export default function NewOrderPage() {
                   {...form.register('costEstimate')}
                 />
                 {form.formState.errors.costEstimate && (
-                  <p className="text-xs text-destructive">{form.formState.errors.costEstimate.message as string}</p>
+                  <p className="text-xs text-destructive">
+                    {form.formState.errors.costEstimate.message as string}
+                  </p>
                 )}
               </div>
             </div>

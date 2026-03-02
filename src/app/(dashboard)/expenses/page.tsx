@@ -8,7 +8,13 @@ import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Card, CardContent } from '@/components/ui/card';
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from '@/components/ui/select';
 import { Skeleton } from '@/components/ui/skeleton';
 import {
   Dialog,
@@ -59,7 +65,14 @@ const expenseSchema = z.object({
     z.number().positive('Debe ser mayor a 0')
   ),
   category: z.enum([
-    'PARTS', 'TOOLS', 'SHIPPING', 'UTILITIES', 'SALARIES', 'RENT', 'MARKETING', 'OTHER',
+    'PARTS',
+    'TOOLS',
+    'SHIPPING',
+    'UTILITIES',
+    'SALARIES',
+    'RENT',
+    'MARKETING',
+    'OTHER',
   ]),
 });
 
@@ -69,7 +82,9 @@ export default function ExpensesPage() {
   const [categoryFilter, setCategoryFilter] = useState<ExpenseCategory | 'ALL'>('ALL');
   const [page, setPage] = useState(1);
   const [showAdd, setShowAdd] = useState(false);
-  const [deleteExpense, setDeleteExpense] = useState<{ id: string; description: string } | null>(null);
+  const [deleteExpense, setDeleteExpense] = useState<{ id: string; description: string } | null>(
+    null
+  );
 
   const { data, isLoading } = useExpenses({
     page,
@@ -79,7 +94,7 @@ export default function ExpensesPage() {
   const { mutate: createExpense, isPending: creating } = useCreateExpense();
   const { mutate: deleteExpenseMutation, isPending: deleting } = useDeleteExpense();
 
-  const expenses = data?.data ?? [];
+  const expenses = data?.items ?? [];
   const total = data?.total ?? 0;
   const pages = data?.pages ?? 1;
 
@@ -89,7 +104,11 @@ export default function ExpensesPage() {
 
   const handleCreate = (values: ExpenseFormValues) => {
     createExpense(
-      { description: values.description, amount: values.amount as number, category: values.category },
+      {
+        description: values.description,
+        amount: values.amount as number,
+        category: values.category,
+      },
       {
         onSuccess: () => {
           setShowAdd(false);
@@ -123,7 +142,10 @@ export default function ExpensesPage() {
       <div className="flex flex-wrap items-center gap-3">
         <Select
           value={categoryFilter}
-          onValueChange={(v) => { setCategoryFilter(v as ExpenseCategory | 'ALL'); setPage(1); }}
+          onValueChange={(v) => {
+            setCategoryFilter(v as ExpenseCategory | 'ALL');
+            setPage(1);
+          }}
         >
           <SelectTrigger className="w-[190px]">
             <SlidersHorizontal className="mr-2 h-3.5 w-3.5 text-muted-foreground" />
@@ -140,7 +162,14 @@ export default function ExpensesPage() {
         </Select>
 
         {categoryFilter !== 'ALL' && (
-          <Button variant="ghost" size="sm" onClick={() => { setCategoryFilter('ALL'); setPage(1); }}>
+          <Button
+            variant="ghost"
+            size="sm"
+            onClick={() => {
+              setCategoryFilter('ALL');
+              setPage(1);
+            }}
+          >
             Limpiar filtro
           </Button>
         )}
@@ -233,12 +262,24 @@ export default function ExpensesPage() {
       {/* Pagination */}
       {pages > 1 && (
         <div className="flex items-center justify-between text-sm text-muted-foreground">
-          <span>Página {page} de {pages}</span>
+          <span>
+            Página {page} de {pages}
+          </span>
           <div className="flex gap-2">
-            <Button variant="outline" size="sm" disabled={page <= 1} onClick={() => setPage((p) => p - 1)}>
+            <Button
+              variant="outline"
+              size="sm"
+              disabled={page <= 1}
+              onClick={() => setPage((p) => p - 1)}
+            >
               Anterior
             </Button>
-            <Button variant="outline" size="sm" disabled={page >= pages} onClick={() => setPage((p) => p + 1)}>
+            <Button
+              variant="outline"
+              size="sm"
+              disabled={page >= pages}
+              onClick={() => setPage((p) => p + 1)}
+            >
               Siguiente
             </Button>
           </div>
@@ -246,7 +287,13 @@ export default function ExpensesPage() {
       )}
 
       {/* Add Expense Dialog */}
-      <Dialog open={showAdd} onOpenChange={(open) => { setShowAdd(open); if (!open) form.reset(); }}>
+      <Dialog
+        open={showAdd}
+        onOpenChange={(open) => {
+          setShowAdd(open);
+          if (!open) form.reset();
+        }}
+      >
         <DialogContent>
           <DialogHeader>
             <DialogTitle>Registrar nuevo gasto</DialogTitle>
@@ -256,7 +303,9 @@ export default function ExpensesPage() {
               <Label>Descripción *</Label>
               <Input placeholder="Pantalla iPhone 14..." {...form.register('description')} />
               {form.formState.errors.description && (
-                <p className="text-xs text-destructive">{form.formState.errors.description.message}</p>
+                <p className="text-xs text-destructive">
+                  {form.formState.errors.description.message}
+                </p>
               )}
             </div>
             <div className="space-y-1.5">

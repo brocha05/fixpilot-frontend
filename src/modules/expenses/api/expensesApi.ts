@@ -11,8 +11,9 @@ export interface CreateExpenseRequest {
 export interface UpdateExpenseRequest extends Partial<CreateExpenseRequest> {}
 
 export const expensesApi = {
-  getAll: (params?: PaginationParams & { category?: ExpenseCategory; fromDate?: string; toDate?: string }) =>
-    apiClient.get<PaginatedResponse<Expense>>('/expenses', { params }),
+  getAll: (
+    params?: PaginationParams & { category?: ExpenseCategory; fromDate?: string; toDate?: string }
+  ) => apiClient.get<PaginatedResponse<Expense>>('/expenses', { params }),
 
   getById: (id: string) => apiClient.get<Expense>(`/expenses/${id}`),
 

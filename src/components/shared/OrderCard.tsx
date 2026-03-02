@@ -34,9 +34,7 @@ export function OrderCard({ order, className, compact = false }: OrderCardProps)
                   {order.deviceModel}
                 </p>
                 {!compact && (
-                  <p className="truncate text-xs text-muted-foreground">
-                    {order.issueDescription}
-                  </p>
+                  <p className="truncate text-xs text-muted-foreground">{order.issueDescription}</p>
                 )}
               </div>
             </div>

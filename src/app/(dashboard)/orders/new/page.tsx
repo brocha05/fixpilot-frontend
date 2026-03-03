@@ -184,9 +184,9 @@ export default function NewOrderPage() {
                     className="pl-9"
                   />
                 </div>
-                {customerSearch && customersData?.data?.length ? (
+                {customerSearch && customersData?.items?.length ? (
                   <div className="rounded-lg border divide-y overflow-hidden">
-                    {customersData.data.map((c) => (
+                    {customersData.items.map((c) => (
                       <button
                         key={c.id}
                         type="button"
@@ -206,7 +206,7 @@ export default function NewOrderPage() {
                       </button>
                     ))}
                   </div>
-                ) : customerSearch && !customersData?.data?.length ? (
+                ) : customerSearch && !customersData?.items?.length ? (
                   <p className="text-sm text-muted-foreground px-1">
                     No se encontró ningún cliente.
                   </p>

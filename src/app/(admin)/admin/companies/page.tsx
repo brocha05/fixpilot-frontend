@@ -169,7 +169,7 @@ export default function AdminCompaniesPage() {
         columns={columns}
         data={data?.items ?? []}
         isLoading={isLoading}
-        totalPages={data?.totalPages}
+        totalPages={data?.pages}
         currentPage={pagination.page}
         onPageChange={pagination.setPage}
         searchValue={pagination.search}

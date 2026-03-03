@@ -168,7 +168,7 @@ export default function FilesPage() {
       </Card>
 
       {/* Pagination */}
-      {(data?.totalPages ?? 0) > 1 && (
+      {(data?.pages ?? 0) > 1 && (
         <div className="flex justify-center gap-2">
           <Button
             variant="outline"
@@ -179,12 +179,12 @@ export default function FilesPage() {
             Previous
           </Button>
           <span className="flex items-center px-2 text-sm text-muted-foreground">
-            Page {pagination.page} of {data?.totalPages}
+            Page {pagination.page} of {data?.pages}
           </span>
           <Button
             variant="outline"
             size="sm"
-            disabled={pagination.page >= (data?.totalPages ?? 1)}
+            disabled={pagination.page >= (data?.pages ?? 1)}
             onClick={() => pagination.setPage(pagination.page + 1)}
           >
             Next

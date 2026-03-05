@@ -101,6 +101,7 @@ export interface Subscription {
   companyId: string;
   planId: string;
   plan?: Plan;
+  company?: { id: string; name: string; slug: string };
   stripeSubscriptionId: string;
   status: SubscriptionStatus;
   currentPeriodStart: string;

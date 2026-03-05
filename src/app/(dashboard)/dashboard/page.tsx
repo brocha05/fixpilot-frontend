@@ -125,9 +125,9 @@ export default function DashboardPage() {
                   </div>
                 ))}
               </div>
-            ) : recentOrders?.data?.length ? (
+            ) : recentOrders?.items?.length ? (
               <div className="divide-y">
-                {recentOrders.data.map((order) => (
+                {recentOrders.items.map((order) => (
                   <Link
                     key={order.id}
                     href={`/orders/${order.id}`}

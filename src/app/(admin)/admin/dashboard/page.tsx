@@ -168,10 +168,9 @@ export default function AdminDashboardPage() {
                   className="flex items-center justify-between border-b px-6 py-3.5 last:border-0"
                 >
                   <div>
-                    <p className="text-sm font-medium">{sub.plan?.name ?? 'Unknown plan'}</p>
+                    <p className="text-sm font-medium">{sub.company?.name ?? 'Unknown company'}</p>
                     <p className="text-xs text-muted-foreground">
-                      {sub.plan ? formatCurrency(sub.plan.price) : '—'} ·{' '}
-                      {formatDate(sub.currentPeriodEnd)}
+                      {sub.plan?.name ?? '—'} · {sub.plan ? formatCurrency(sub.plan.price) : '—'}
                     </p>
                   </div>
                   <span

@@ -16,6 +16,7 @@ import {
   BarChart3,
   Receipt,
   UserCircle,
+  Package,
 } from 'lucide-react';
 import { useState } from 'react';
 import { cn } from '@/lib/utils/cn';
@@ -126,6 +127,7 @@ export function Sidebar() {
         { href: '/admin/dashboard', label: 'Resumen', icon: BarChart3, exact: true },
         { href: '/admin/companies', label: 'Empresas', icon: Building2 },
         { href: '/admin/subscriptions', label: 'Suscripciones', icon: CreditCard },
+        { href: '/admin/plans', label: 'Planes', icon: Package },
       ],
     },
   ];

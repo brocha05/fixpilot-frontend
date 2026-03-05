@@ -30,6 +30,26 @@ function subStatusColor(status: string) {
 
 const columns: ColumnDef<Subscription>[] = [
   {
+    id: 'company',
+    header: 'Empresa',
+    cell: ({ row }) => {
+      const co = row.original.company;
+      return co ? (
+        <div className="flex items-center gap-2">
+          <div className="flex h-7 w-7 shrink-0 items-center justify-center rounded-md bg-primary/10 text-xs font-bold text-primary">
+            {co.name.charAt(0).toUpperCase()}
+          </div>
+          <div>
+            <p className="text-sm font-medium">{co.name}</p>
+            <p className="font-mono text-xs text-muted-foreground">{co.slug}</p>
+          </div>
+        </div>
+      ) : (
+        <span className="text-xs text-muted-foreground">—</span>
+      );
+    },
+  },
+  {
     id: 'plan',
     header: 'Plan',
     cell: ({ row }) => (
@@ -44,7 +64,7 @@ const columns: ColumnDef<Subscription>[] = [
   },
   {
     id: 'status',
-    header: 'Status',
+    header: 'Estado',
     cell: ({ row }) => (
       <span
         className={cn(
@@ -58,7 +78,7 @@ const columns: ColumnDef<Subscription>[] = [
   },
   {
     id: 'period',
-    header: 'Current Period',
+    header: 'Período',
     cell: ({ row }) => (
       <div className="text-sm text-muted-foreground">
         {formatDate(row.original.currentPeriodStart)} – {formatDate(row.original.currentPeriodEnd)}
@@ -67,7 +87,7 @@ const columns: ColumnDef<Subscription>[] = [
   },
   {
     accessorKey: 'cancelAtPeriodEnd',
-    header: 'Canceling',
+    header: 'Cancelando',
     cell: ({ getValue }) => (
       <span
         className={
@@ -76,13 +96,13 @@ const columns: ColumnDef<Subscription>[] = [
             : 'text-muted-foreground text-xs'
         }
       >
-        {getValue<boolean>() ? 'Yes' : 'No'}
+        {getValue<boolean>() ? 'Sí' : 'No'}
       </span>
     ),
   },
   {
     accessorKey: 'createdAt',
-    header: 'Created',
+    header: 'Creada',
     cell: ({ getValue }) => (
       <span className="text-sm text-muted-foreground">{formatDate(getValue<string>())}</span>
     ),
@@ -103,8 +123,8 @@ export default function AdminSubscriptionsPage() {
   return (
     <div className="space-y-6">
       <PageHeader
-        title="Subscriptions"
-        description={`${data?.total ?? 0} total · ${active} active · ${pastDue} past due`}
+        title="Suscripciones"
+        description={`${data?.total ?? 0} total · ${active} activas · ${pastDue} vencidas`}
       />
 
       <DataTable

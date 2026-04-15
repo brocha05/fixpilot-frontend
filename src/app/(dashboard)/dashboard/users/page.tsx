@@ -43,7 +43,7 @@ import { formatDate, formatInitials } from '@/lib/utils/formatters';
 import { useAuthStore } from '@/store/authStore';
 
 const inviteSchema = z.object({
-  email: z.string().email('Valid email required'),
+  email: z.string().email('Correo electrónico válido requerido'),
   role: z.enum(['ADMIN', 'MEMBER']),
 });
 type InviteForm = z.infer<typeof inviteSchema>;
@@ -107,7 +107,7 @@ export default function UsersPage() {
   const columns: ColumnDef<User>[] = [
     {
       id: 'user',
-      header: 'User',
+      header: 'Usuario',
       cell: ({ row }) => {
         const u = row.original;
         return (
@@ -129,35 +129,35 @@ export default function UsersPage() {
     },
     {
       accessorKey: 'role',
-      header: 'Role',
+      header: 'Rol',
       cell: ({ getValue }) => <RoleBadge role={getValue<string>()} />,
     },
     {
       accessorKey: 'isActive',
-      header: 'Status',
+      header: 'Estado',
       cell: ({ getValue }) => (
         <div className="flex items-center gap-1.5">
           <span
             className={`h-1.5 w-1.5 rounded-full ${getValue<boolean>() ? 'bg-emerald-500' : 'bg-muted-foreground/40'}`}
           />
           <span className="text-sm text-muted-foreground">
-            {getValue<boolean>() ? 'Active' : 'Inactive'}
+            {getValue<boolean>() ? 'Activo' : 'Inactivo'}
           </span>
         </div>
       ),
     },
     {
       accessorKey: 'emailVerified',
-      header: 'Verified',
+      header: 'Verificado',
       cell: ({ getValue }) => (
         <Badge variant={getValue<boolean>() ? 'default' : 'secondary'} className="text-xs">
-          {getValue<boolean>() ? 'Verified' : 'Pending'}
+          {getValue<boolean>() ? 'Verificado' : 'Pendiente'}
         </Badge>
       ),
     },
     {
       accessorKey: 'createdAt',
-      header: 'Joined',
+      header: 'Registro',
       cell: ({ getValue }) => (
         <span className="text-sm text-muted-foreground">{formatDate(getValue<string>())}</span>
       ),
@@ -173,14 +173,14 @@ export default function UsersPage() {
             <DropdownMenuTrigger asChild>
               <Button variant="ghost" size="icon" className="h-8 w-8">
                 <MoreHorizontal className="h-4 w-4" />
-                <span className="sr-only">Open menu</span>
+                <span className="sr-only">Abrir menú</span>
               </Button>
             </DropdownMenuTrigger>
             <DropdownMenuContent align="end">
               {!u.emailVerified && (
                 <DropdownMenuItem onClick={() => resendInvite(u.id)}>
                   <Mail className="h-4 w-4" />
-                  Resend invite
+                  Reenviar invitación
                 </DropdownMenuItem>
               )}
               <DropdownMenuItem
@@ -189,7 +189,7 @@ export default function UsersPage() {
                 }
               >
                 <ShieldCheck className="h-4 w-4" />
-                Make {u.role === 'ADMIN' ? 'member' : 'admin'}
+                Hacer {u.role === 'ADMIN' ? 'miembro' : 'admin'}
               </DropdownMenuItem>
               <DropdownMenuSeparator />
               <DropdownMenuItem
@@ -197,7 +197,7 @@ export default function UsersPage() {
                 onClick={() => setDeleteId(u.id)}
               >
                 <UserX className="h-4 w-4" />
-                Remove user
+                Eliminar usuario
               </DropdownMenuItem>
             </DropdownMenuContent>
           </DropdownMenu>
@@ -208,11 +208,11 @@ export default function UsersPage() {
 
   return (
     <div className="space-y-6">
-      <PageHeader title="Users" description="Manage your team members and their permissions.">
+      <PageHeader title="Usuarios" description="Administra a los miembros de tu equipo y sus permisos.">
         {isAdmin && (
           <Button onClick={() => setInviteOpen(true)}>
             <UserPlus className="h-4 w-4" />
-            Invite user
+            Invitar usuario
           </Button>
         )}
       </PageHeader>
@@ -226,10 +226,10 @@ export default function UsersPage() {
         onPageChange={pagination.setPage}
         searchValue={pagination.search}
         onSearchChange={pagination.setSearch}
-        searchPlaceholder="Search by name or email..."
+        searchPlaceholder="Buscar por nombre o correo..."
         toolbar={
           <span className="text-sm text-muted-foreground">
-            {data?.total ?? 0} member{data?.total !== 1 ? 's' : ''}
+            {data?.total ?? 0} miembro{data?.total !== 1 ? 's' : ''}
           </span>
         }
       />
@@ -238,23 +238,23 @@ export default function UsersPage() {
       <Modal
         open={inviteOpen}
         onOpenChange={setInviteOpen}
-        title="Invite team member"
-        description="They'll receive an email to join your workspace."
+        title="Invitar miembro al equipo"
+        description="Recibirá un correo para unirse a tu espacio de trabajo."
       >
         <form onSubmit={handleSubmit(onInvite)} className="space-y-4 py-2">
           <div className="space-y-1.5">
-            <Label htmlFor="inv-email">Email address</Label>
+            <Label htmlFor="inv-email">Correo electrónico</Label>
             <Input
               id="inv-email"
               type="email"
               {...register('email')}
-              placeholder="jane@company.com"
+              placeholder="juan@empresa.com"
             />
             {errors.email && <p className="text-xs text-destructive">{errors.email.message}</p>}
           </div>
 
           <div className="space-y-1.5">
-            <Label htmlFor="inv-role">Role</Label>
+            <Label htmlFor="inv-role">Rol</Label>
             <Select
               defaultValue="MEMBER"
               onValueChange={(v) => setValue('role', v as 'ADMIN' | 'MEMBER')}
@@ -263,18 +263,18 @@ export default function UsersPage() {
                 <SelectValue />
               </SelectTrigger>
               <SelectContent>
-                <SelectItem value="MEMBER">Member — can view and use the workspace</SelectItem>
-                <SelectItem value="ADMIN">Admin — full management access</SelectItem>
+                <SelectItem value="MEMBER">Miembro — puede ver y usar el espacio de trabajo</SelectItem>
+                <SelectItem value="ADMIN">Administrador — acceso completo de gestión</SelectItem>
               </SelectContent>
             </Select>
           </div>
 
           <div className="flex justify-end gap-2 pt-2">
             <Button type="button" variant="outline" onClick={() => setInviteOpen(false)}>
-              Cancel
+              Cancelar
             </Button>
             <Button type="submit" disabled={isInviting}>
-              {isInviting ? 'Sending...' : 'Send invitation'}
+              {isInviting ? 'Enviando...' : 'Enviar invitación'}
             </Button>
           </div>
         </form>
@@ -284,9 +284,9 @@ export default function UsersPage() {
       <ConfirmDialog
         open={!!deleteId}
         onOpenChange={(o) => !o && setDeleteId(null)}
-        title="Remove user"
-        description="This user will lose access immediately. This action cannot be undone."
-        confirmLabel="Remove"
+        title="Eliminar usuario"
+        description="Este usuario perderá acceso inmediatamente. Esta acción no se puede deshacer."
+        confirmLabel="Eliminar"
         variant="destructive"
         isLoading={isDeleting}
         onConfirm={() => {

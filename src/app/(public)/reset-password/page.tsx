@@ -17,13 +17,13 @@ const schema = z
   .object({
     password: z
       .string()
-      .min(8, 'At least 8 characters')
-      .regex(/[A-Z]/, 'Must contain uppercase')
-      .regex(/[0-9]/, 'Must contain a number'),
+      .min(8, 'Al menos 8 caracteres')
+      .regex(/[A-Z]/, 'Debe contener una mayúscula')
+      .regex(/[0-9]/, 'Debe contener un número'),
     confirmPassword: z.string(),
   })
   .refine((d) => d.password === d.confirmPassword, {
-    message: 'Passwords do not match',
+    message: 'Las contraseñas no coinciden',
     path: ['confirmPassword'],
   });
 
@@ -49,9 +49,9 @@ export default function ResetPasswordPage() {
         <Card className="w-full max-w-sm">
           <CardContent className="py-8 text-center">
             <p className="text-sm text-muted-foreground">
-              Invalid or missing token.{' '}
+              Token inválido o faltante.{' '}
               <Link href="/forgot-password" className="text-primary underline">
-                Request a new link
+                Solicitar un nuevo enlace
               </Link>
             </p>
           </CardContent>
@@ -71,8 +71,8 @@ export default function ResetPasswordPage() {
 
         <Card>
           <CardHeader className="text-center">
-            <CardTitle>Set new password</CardTitle>
-            <CardDescription>Choose a strong password for your account.</CardDescription>
+            <CardTitle>Establecer nueva contraseña</CardTitle>
+            <CardDescription>Elige una contraseña segura para tu cuenta.</CardDescription>
           </CardHeader>
           <CardContent>
             <form
@@ -80,7 +80,7 @@ export default function ResetPasswordPage() {
               className="space-y-4"
             >
               <div className="space-y-1.5">
-                <Label htmlFor="password">New password</Label>
+                <Label htmlFor="password">Nueva contraseña</Label>
                 <div className="relative">
                   <Input
                     id="password"
@@ -101,14 +101,14 @@ export default function ResetPasswordPage() {
                 )}
               </div>
               <div className="space-y-1.5">
-                <Label htmlFor="confirmPassword">Confirm password</Label>
+                <Label htmlFor="confirmPassword">Confirmar contraseña</Label>
                 <Input id="confirmPassword" type="password" {...register('confirmPassword')} />
                 {errors.confirmPassword && (
                   <p className="text-xs text-destructive">{errors.confirmPassword.message}</p>
                 )}
               </div>
               <Button type="submit" className="w-full" disabled={isPending}>
-                {isPending ? 'Resetting...' : 'Reset password'}
+                {isPending ? 'Restableciendo...' : 'Restablecer contraseña'}
               </Button>
             </form>
           </CardContent>

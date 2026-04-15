@@ -50,7 +50,7 @@ export function useLogin() {
     },
     onSuccess: (data) => {
       setAuth(data.user, data.tokens.accessToken, data.tokens.refreshToken, data.company);
-      toast.success(`Welcome back, ${data.user.firstName}!`);
+      toast.success(`¡Bienvenido, ${data.user.firstName}!`);
       // Redirect based on role
       if (data.user.role === 'SUPER_ADMIN') {
         window.location.href = '/admin/dashboard';
@@ -63,17 +63,17 @@ export function useLogin() {
       if (isAxiosError(error)) {
         const status = error.response?.status;
         if (status === 0 || !error.response) {
-          toast.error('Cannot reach the server. Check that the backend is running.');
+          toast.error('No se puede conectar al servidor. Verifica que el backend esté en ejecución.');
           return;
         }
         if (status === 401 || status === 400) {
-          toast.error('Invalid email or password.');
+          toast.error('Correo o contraseña inválidos.');
           return;
         }
-        toast.error(`Server error ${status}. Check the browser console for details.`);
+        toast.error(`Error del servidor ${status}. Revisa la consola del navegador.`);
         return;
       }
-      toast.error(`Unexpected error: ${(error as Error).message}`);
+      toast.error(`Error inesperado: ${(error as Error).message}`);
     },
   });
 }
@@ -90,15 +90,15 @@ export function useRegister() {
     },
     onSuccess: (data) => {
       setAuth(data.user, data.tokens.accessToken, data.tokens.refreshToken, data.company);
-      toast.success('Account created successfully!');
+      toast.success('¡Cuenta creada exitosamente!');
       window.location.href = '/dashboard';
     },
     onError: (error) => {
       if (isAxiosError(error) && error.response?.status === 409) {
-        toast.error('An account with this email already exists.');
+        toast.error('Ya existe una cuenta con este correo.');
         return;
       }
-      toast.error('Could not create account. Please try again.');
+      toast.error('No se pudo crear la cuenta. Intenta de nuevo.');
     },
   });
 }
@@ -132,13 +132,13 @@ export function useChangePassword() {
       currentPassword: string;
       newPassword: string;
     }) => authApi.changePassword(currentPassword, newPassword),
-    onSuccess: () => toast.success('Password updated successfully.'),
+    onSuccess: () => toast.success('Contraseña actualizada exitosamente.'),
     onError: (error) => {
       if (isAxiosError(error) && error.response?.status === 401) {
-        toast.error('Current password is incorrect.');
+        toast.error('La contraseña actual es incorrecta.');
         return;
       }
-      toast.error('Failed to update password.');
+      toast.error('No se pudo actualizar la contraseña.');
     },
   });
 }
@@ -149,8 +149,8 @@ export function useForgotPassword() {
   return useMutation({
     mutationFn: (email: string) => authApi.forgotPassword(email),
     onSuccess: () =>
-      toast.success("If that email exists, you'll receive reset instructions shortly."),
-    onError: () => toast.error('Failed to send reset email.'),
+      toast.success('Si ese correo existe, recibirás instrucciones para restablecer tu contraseña en breve.'),
+    onError: () => toast.error('No se pudo enviar el correo de restablecimiento.'),
   });
 }
 
@@ -162,10 +162,10 @@ export function useResetPassword() {
     mutationFn: ({ token, password }: { token: string; password: string }) =>
       authApi.resetPassword(token, password),
     onSuccess: () => {
-      toast.success('Password reset successfully. Please log in.');
+      toast.success('Contraseña restablecida exitosamente. Por favor inicia sesión.');
       router.push('/login');
     },
-    onError: () => toast.error('Invalid or expired reset token.'),
+    onError: () => toast.error('Token de restablecimiento inválido o expirado.'),
   });
 }
 
@@ -190,9 +190,9 @@ export function useAcceptInvite() {
     },
     onSuccess: (data) => {
       setAuth(data.user, data.tokens.accessToken, data.tokens.refreshToken, data.company);
-      toast.success('Welcome! Your account has been created.');
+      toast.success('¡Bienvenido! Tu cuenta ha sido creada.');
       window.location.href = '/dashboard';
     },
-    onError: () => toast.error('Invalid or expired invitation link.'),
+    onError: () => toast.error('Enlace de invitación inválido o expirado.'),
   });
 }

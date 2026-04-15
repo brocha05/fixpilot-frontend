@@ -9,21 +9,21 @@ const sections = [
   {
     href: '/dashboard/settings/profile',
     icon: User,
-    title: 'Profile',
-    description: 'Update your name and personal details.',
+    title: 'Perfil',
+    description: 'Actualiza tu nombre y datos personales.',
   },
   {
     href: '/dashboard/settings/security',
     icon: Lock,
-    title: 'Security',
-    description: 'Change your password and manage account access.',
+    title: 'Seguridad',
+    description: 'Cambia tu contraseña y administra el acceso a tu cuenta.',
   },
 ];
 
 export default function SettingsPage() {
   return (
     <div className="space-y-6">
-      <PageHeader title="Settings" description="Manage your account and preferences." />
+      <PageHeader title="Configuración" description="Administra tu cuenta y preferencias." />
 
       <Card>
         <CardContent className="p-0">

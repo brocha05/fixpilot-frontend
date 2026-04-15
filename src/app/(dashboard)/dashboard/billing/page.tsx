@@ -20,6 +20,23 @@ import { formatDate, formatCurrency } from '@/lib/utils/formatters';
 import { cn } from '@/lib/utils/cn';
 import type { Plan } from '@/types';
 
+const subscriptionStatusLabel: Record<string, string> = {
+  ACTIVE: 'Activo',
+  TRIALING: 'En prueba',
+  PAST_DUE: 'Vencida',
+  CANCELED: 'Cancelado',
+  INCOMPLETE: 'Incompleto',
+  UNPAID: 'Sin pago',
+};
+
+const invoiceStatusLabel: Record<string, string> = {
+  paid: 'Pagada',
+  open: 'Pendiente',
+  void: 'Anulada',
+  uncollectible: 'Incobrable',
+  draft: 'Borrador',
+};
+
 function statusVariant(status: string) {
   switch (status?.toUpperCase()) {
     case 'ACTIVE':
@@ -55,7 +72,7 @@ function PlanCard({
     >
       {isCurrent && (
         <span className="absolute right-3 top-3 rounded-full bg-primary/10 px-2 py-0.5 text-[10px] font-semibold text-primary">
-          Current
+          Actual
         </span>
       )}
       <h3 className="font-semibold">{plan.name}</h3>
@@ -81,7 +98,7 @@ function PlanCard({
           onClick={() => onSelect(plan.stripePriceId)}
         >
           <Zap className="h-3.5 w-3.5" />
-          {loading ? 'Redirecting...' : 'Subscribe'}
+          {loading ? 'Redirigiendo...' : 'Suscribirse'}
         </Button>
       )}
     </div>
@@ -103,8 +120,8 @@ export default function BillingPage() {
   return (
     <div className="space-y-8">
       <PageHeader
-        title="Billing"
-        description="Manage your subscription, payment method, and invoices."
+        title="Facturación"
+        description="Administra tu suscripción, método de pago y facturas."
       >
         <Button
           variant="outline"
@@ -112,7 +129,7 @@ export default function BillingPage() {
           disabled={portalPending || !subscription}
         >
           <ExternalLink className="h-4 w-4" />
-          {portalPending ? 'Opening...' : 'Billing portal'}
+          {portalPending ? 'Abriendo...' : 'Portal de facturación'}
         </Button>
       </PageHeader>
 
@@ -121,7 +138,7 @@ export default function BillingPage() {
         <CardHeader>
           <CardTitle className="flex items-center gap-2 text-base">
             <CreditCard className="h-4 w-4" />
-            Current Subscription
+            Suscripción Actual
           </CardTitle>
         </CardHeader>
         <CardContent>
@@ -137,7 +154,7 @@ export default function BillingPage() {
                 <div>
                   <div className="flex items-center gap-2">
                     <p className="text-lg font-semibold">
-                      {subscription.plan?.name ?? 'Active Plan'}
+                      {subscription.plan?.name ?? 'Plan Activo'}
                     </p>
                     <span
                       className={cn(
@@ -145,24 +162,24 @@ export default function BillingPage() {
                         statusVariant(subscription.status)
                       )}
                     >
-                      {subscription.status}
+                      {subscriptionStatusLabel[subscription.status?.toUpperCase()] ?? subscription.status}
                     </span>
                   </div>
                   <p className="mt-0.5 text-sm text-muted-foreground">
                     {formatCurrency(subscription.plan?.price ?? 0)} /{' '}
-                    {subscription.plan?.interval?.toLowerCase() ?? 'month'}
+                    {subscription.plan?.interval?.toLowerCase() ?? 'mes'}
                   </p>
                 </div>
               </div>
 
               <div className="grid gap-3 rounded-lg bg-muted/40 p-4 text-sm sm:grid-cols-2">
                 <div>
-                  <p className="text-xs text-muted-foreground">Period start</p>
+                  <p className="text-xs text-muted-foreground">Inicio del período</p>
                   <p className="font-medium">{formatDate(subscription.currentPeriodStart)}</p>
                 </div>
                 <div>
                   <p className="text-xs text-muted-foreground">
-                    {subscription.cancelAtPeriodEnd ? 'Cancels on' : 'Renews on'}
+                    {subscription.cancelAtPeriodEnd ? 'Cancela el' : 'Renueva el'}
                   </p>
                   <p className="font-medium">{formatDate(subscription.currentPeriodEnd)}</p>
                 </div>
@@ -171,7 +188,7 @@ export default function BillingPage() {
               {subscription.cancelAtPeriodEnd && (
                 <div className="flex items-center justify-between rounded-lg border border-amber-200 bg-amber-50 p-3 dark:border-amber-800 dark:bg-amber-900/20">
                   <p className="text-sm text-amber-700 dark:text-amber-400">
-                    Subscription will cancel on {formatDate(subscription.currentPeriodEnd)}.
+                    La suscripción cancelará el {formatDate(subscription.currentPeriodEnd)}.
                   </p>
                   <Button
                     size="sm"
@@ -180,7 +197,7 @@ export default function BillingPage() {
                     disabled={resumePending}
                   >
                     <RotateCcw className="h-3.5 w-3.5" />
-                    {resumePending ? 'Resuming...' : 'Resume'}
+                    {resumePending ? 'Reanudando...' : 'Reanudar'}
                   </Button>
                 </div>
               )}
@@ -193,15 +210,15 @@ export default function BillingPage() {
                     className="text-destructive hover:text-destructive"
                     onClick={() => setCancelOpen(true)}
                   >
-                    Cancel subscription
+                    Cancelar suscripción
                   </Button>
                 </div>
               )}
             </div>
           ) : (
             <div className="py-4 text-center">
-              <p className="text-sm text-muted-foreground mb-3">No active subscription.</p>
-              <p className="text-xs text-muted-foreground">Choose a plan below to get started.</p>
+              <p className="text-sm text-muted-foreground mb-3">Sin suscripción activa.</p>
+              <p className="text-xs text-muted-foreground">Elige un plan para comenzar.</p>
             </div>
           )}
         </CardContent>
@@ -209,7 +226,7 @@ export default function BillingPage() {
 
       {/* Plans */}
       <div>
-        <h2 className="mb-4 font-semibold">Available Plans</h2>
+        <h2 className="mb-4 font-semibold">Planes Disponibles</h2>
         {plansLoading ? (
           <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
             {Array.from({ length: 3 }).map((_, i) => (
@@ -229,15 +246,15 @@ export default function BillingPage() {
             ))}
           </div>
         ) : (
-          <p className="text-sm text-muted-foreground">No plans available.</p>
+          <p className="text-sm text-muted-foreground">No hay planes disponibles.</p>
         )}
       </div>
 
       {/* Invoices */}
       <Card>
         <CardHeader>
-          <CardTitle className="text-base">Invoices</CardTitle>
-          <CardDescription>Download past invoices for your records.</CardDescription>
+          <CardTitle className="text-base">Facturas</CardTitle>
+          <CardDescription>Descarga facturas anteriores para tus registros.</CardDescription>
         </CardHeader>
         <CardContent className="p-0">
           {invoicesLoading ? (
@@ -253,7 +270,7 @@ export default function BillingPage() {
               ))}
             </div>
           ) : !invoices?.length ? (
-            <p className="py-8 text-center text-sm text-muted-foreground">No invoices yet.</p>
+            <p className="py-8 text-center text-sm text-muted-foreground">Sin facturas aún.</p>
           ) : (
             invoices.map((invoice) => (
               <div
@@ -262,7 +279,7 @@ export default function BillingPage() {
               >
                 <div>
                   <p className="text-sm font-medium">
-                    Invoice #{invoice.number ?? invoice.id.slice(0, 8)}
+                    Factura #{invoice.number ?? invoice.id.slice(0, 8)}
                   </p>
                   <p className="text-xs text-muted-foreground">
                     {invoice.created
@@ -282,7 +299,7 @@ export default function BillingPage() {
                         : 'bg-amber-500/15 text-amber-600'
                     )}
                   >
-                    {invoice.status}
+                    {invoiceStatusLabel[invoice.status] ?? invoice.status}
                   </span>
                   {(invoice.invoicePdf || invoice.hostedInvoiceUrl) && (
                     <Button variant="ghost" size="icon" className="h-8 w-8" asChild>
@@ -292,7 +309,7 @@ export default function BillingPage() {
                         rel="noreferrer"
                       >
                         <Download className="h-4 w-4" />
-                        <span className="sr-only">Download</span>
+                        <span className="sr-only">Descargar</span>
                       </a>
                     </Button>
                   )}
@@ -306,9 +323,9 @@ export default function BillingPage() {
       <ConfirmDialog
         open={cancelOpen}
         onOpenChange={setCancelOpen}
-        title="Cancel subscription"
-        description="Your subscription will be canceled at the end of the billing period. You'll retain access until then."
-        confirmLabel="Cancel subscription"
+        title="Cancelar suscripción"
+        description="Tu suscripción se cancelará al final del período de facturación. Tendrás acceso hasta entonces."
+        confirmLabel="Cancelar suscripción"
         variant="destructive"
         isLoading={cancelPending}
         onConfirm={() => cancelSub(undefined, { onSuccess: () => setCancelOpen(false) })}

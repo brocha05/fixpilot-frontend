@@ -27,7 +27,7 @@ import { formatDate, formatInitials } from '@/lib/utils/formatters';
 import { useRouter } from 'next/navigation';
 import { toast } from 'sonner';
 
-const schema = z.object({ name: z.string().min(2, 'Name must be at least 2 characters') });
+const schema = z.object({ name: z.string().min(2, 'El nombre debe tener al menos 2 caracteres') });
 type FormData = z.infer<typeof schema>;
 
 export default function CompanyPage() {
@@ -58,10 +58,10 @@ export default function CompanyPage() {
     setDeleting(true);
     try {
       await companyApi.delete();
-      toast.success('Company deleted.');
+      toast.success('Empresa eliminada.');
       router.push('/login');
     } catch {
-      toast.error('Failed to delete company.');
+      toast.error('No se pudo eliminar la empresa.');
     } finally {
       setDeleting(false);
       setDeleteOpen(false);
@@ -70,7 +70,7 @@ export default function CompanyPage() {
 
   return (
     <div className="space-y-6">
-      <PageHeader title="Company" description="Manage your company profile and settings." />
+      <PageHeader title="Empresa" description="Administra el perfil y configuración de tu empresa." />
 
       <div className="grid gap-6 lg:grid-cols-3">
         {/* Left: settings */}
@@ -79,16 +79,16 @@ export default function CompanyPage() {
             <CardHeader>
               <CardTitle className="flex items-center gap-2 text-base">
                 <Building2 className="h-4 w-4" />
-                Company Profile
+                Perfil de Empresa
               </CardTitle>
-              <CardDescription>Update your company&apos;s name and logo.</CardDescription>
+              <CardDescription>Actualiza el nombre y logo de tu empresa.</CardDescription>
             </CardHeader>
             <CardContent className="space-y-6">
               {/* Logo */}
               <div className="flex items-center gap-4">
                 <div className="relative h-20 w-20 overflow-hidden rounded-xl border bg-muted">
                   {company?.logoUrl ? (
-                    <Image src={company.logoUrl} alt="Company logo" fill className="object-cover" />
+                    <Image src={company.logoUrl} alt="Logo de empresa" fill className="object-cover" />
                   ) : (
                     <div className="flex h-full w-full items-center justify-center">
                       <Building2 className="h-8 w-8 text-muted-foreground/40" />
@@ -104,9 +104,9 @@ export default function CompanyPage() {
                       disabled={uploadingLogo}
                     >
                       <Upload className="h-3.5 w-3.5" />
-                      {uploadingLogo ? 'Uploading...' : 'Upload logo'}
+                      {uploadingLogo ? 'Subiendo...' : 'Subir logo'}
                     </Button>
-                    <p className="text-xs text-muted-foreground">PNG, JPG up to 5 MB</p>
+                    <p className="text-xs text-muted-foreground">PNG, JPG hasta 5 MB</p>
                     <input
                       ref={logoRef}
                       type="file"
@@ -134,7 +134,7 @@ export default function CompanyPage() {
               ) : (
                 <form onSubmit={handleSubmit((d) => update(d))} className="space-y-4">
                   <div className="space-y-1.5">
-                    <Label htmlFor="co-name">Company name</Label>
+                    <Label htmlFor="co-name">Nombre de empresa</Label>
                     <Input id="co-name" {...register('name')} disabled={!isAdmin} />
                     {errors.name && (
                       <p className="text-xs text-destructive">{errors.name.message}</p>
@@ -148,11 +148,11 @@ export default function CompanyPage() {
                       className="bg-muted/50 font-mono text-sm"
                     />
                     <p className="text-xs text-muted-foreground">
-                      Used in URLs — contact support to change.
+                      Usado en URLs — contacta soporte para cambiar.
                     </p>
                   </div>
                   <div className="space-y-1.5">
-                    <Label>Created</Label>
+                    <Label>Creado</Label>
                     <Input
                       value={company?.createdAt ? formatDate(company.createdAt) : ''}
                       disabled
@@ -162,7 +162,7 @@ export default function CompanyPage() {
                   {isAdmin && (
                     <div className="flex justify-end">
                       <Button type="submit" disabled={!isDirty || updating}>
-                        {updating ? 'Saving...' : 'Save changes'}
+                        {updating ? 'Guardando...' : 'Guardar cambios'}
                       </Button>
                     </div>
                   )}
@@ -176,13 +176,13 @@ export default function CompanyPage() {
               <CardHeader>
                 <CardTitle className="flex items-center gap-2 text-base text-destructive">
                   <ShieldAlert className="h-4 w-4" />
-                  Danger Zone
+                  Zona de Peligro
                 </CardTitle>
-                <CardDescription>Permanently delete this company and all its data.</CardDescription>
+                <CardDescription>Elimina permanentemente esta empresa y todos sus datos.</CardDescription>
               </CardHeader>
               <CardContent>
                 <Button variant="destructive" size="sm" onClick={() => setDeleteOpen(true)}>
-                  Delete company
+                  Eliminar empresa
                 </Button>
               </CardContent>
             </Card>
@@ -194,12 +194,12 @@ export default function CompanyPage() {
           <CardHeader>
             <CardTitle className="flex items-center gap-2 text-base">
               <Users className="h-4 w-4" />
-              Members
+              Miembros
             </CardTitle>
             <CardDescription>
               {membersLoading
                 ? '—'
-                : `${members?.length ?? 0} member${members?.length !== 1 ? 's' : ''}`}
+                : `${members?.length ?? 0} miembro${members?.length !== 1 ? 's' : ''}`}
             </CardDescription>
           </CardHeader>
           <CardContent className="p-0">
@@ -244,9 +244,9 @@ export default function CompanyPage() {
       <ConfirmDialog
         open={deleteOpen}
         onOpenChange={setDeleteOpen}
-        title="Delete company"
-        description="All users, data, and files will be permanently deleted. This cannot be undone."
-        confirmLabel="Delete company"
+        title="Eliminar empresa"
+        description="Todos los usuarios, datos y archivos serán eliminados permanentemente. Esta acción no se puede deshacer."
+        confirmLabel="Eliminar empresa"
         variant="destructive"
         isLoading={deleting}
         onConfirm={handleDeleteCompany}

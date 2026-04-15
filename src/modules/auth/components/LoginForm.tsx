@@ -29,11 +29,11 @@ export function LoginForm() {
   return (
     <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
       <div className="space-y-2">
-        <Label htmlFor="email">Email</Label>
+        <Label htmlFor="email">Correo electrónico</Label>
         <Input
           id="email"
           type="email"
-          placeholder="you@example.com"
+          placeholder="tu@ejemplo.com"
           autoComplete="email"
           className={cn(errors.email && 'border-destructive')}
           {...register('email')}
@@ -43,12 +43,12 @@ export function LoginForm() {
 
       <div className="space-y-2">
         <div className="flex items-center justify-between">
-          <Label htmlFor="password">Password</Label>
+          <Label htmlFor="password">Contraseña</Label>
           <Link
             href="/forgot-password"
             className="text-sm text-muted-foreground underline-offset-4 hover:underline"
           >
-            Forgot password?
+            ¿Olvidaste tu contraseña?
           </Link>
         </div>
         <div className="relative">
@@ -64,7 +64,7 @@ export function LoginForm() {
             type="button"
             onClick={() => setShowPassword((v) => !v)}
             className="absolute right-3 top-1/2 -translate-y-1/2 text-muted-foreground hover:text-foreground"
-            aria-label={showPassword ? 'Hide password' : 'Show password'}
+            aria-label={showPassword ? 'Ocultar contraseña' : 'Mostrar contraseña'}
           >
             {showPassword ? <EyeOff className="h-4 w-4" /> : <Eye className="h-4 w-4" />}
           </button>
@@ -74,16 +74,16 @@ export function LoginForm() {
 
       <Button type="submit" className="w-full" disabled={isPending}>
         {isPending && <Loader2 className="mr-2 h-4 w-4 animate-spin" />}
-        Sign in
+        Iniciar sesión
       </Button>
 
       <p className="text-center text-sm text-muted-foreground">
-        Don&apos;t have an account?{' '}
+        ¿No tienes cuenta?{' '}
         <Link
           href="/register"
           className="font-medium text-primary underline-offset-4 hover:underline"
         >
-          Sign up
+          Regístrate
         </Link>
       </p>
     </form>

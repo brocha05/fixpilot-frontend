@@ -2,7 +2,7 @@ import type { Metadata } from 'next';
 import { Zap } from 'lucide-react';
 import { LoginForm } from '@/modules/auth/components/LoginForm';
 
-export const metadata: Metadata = { title: 'Sign in' };
+export const metadata: Metadata = { title: 'Iniciar sesión' };
 
 export default function LoginPage() {
   return (
@@ -13,8 +13,8 @@ export default function LoginPage() {
           <div className="flex h-12 w-12 items-center justify-center rounded-xl bg-primary shadow-lg shadow-primary/25">
             <Zap className="h-6 w-6 text-primary-foreground" />
           </div>
-          <h1 className="mt-4 text-2xl font-bold tracking-tight">Welcome back</h1>
-          <p className="mt-1 text-sm text-muted-foreground">Sign in to your account to continue</p>
+          <h1 className="mt-4 text-2xl font-bold tracking-tight">Bienvenido de nuevo</h1>
+          <p className="mt-1 text-sm text-muted-foreground">Inicia sesión en tu cuenta para continuar</p>
         </div>
 
         {/* Form card */}

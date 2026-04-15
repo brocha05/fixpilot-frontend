@@ -44,9 +44,9 @@ export function useUploadFile() {
     }) => filesApi.upload(file, resourceType, resourceId).then((r) => r.data),
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: fileKeys.all });
-      toast.success('File uploaded.');
+      toast.success('Archivo subido.');
     },
-    onError: () => toast.error('Failed to upload file.'),
+    onError: () => toast.error('No se pudo subir el archivo.'),
   });
 }
 
@@ -56,9 +56,9 @@ export function useDeleteFile() {
     mutationFn: (id: string) => filesApi.delete(id),
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: fileKeys.all });
-      toast.success('File deleted.');
+      toast.success('Archivo eliminado.');
     },
-    onError: () => toast.error('Failed to delete file.'),
+    onError: () => toast.error('No se pudo eliminar el archivo.'),
   });
 }
 

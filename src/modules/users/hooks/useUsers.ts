@@ -35,9 +35,9 @@ export function useUpdateMe() {
     onSuccess: (updated) => {
       queryClient.setQueryData(userKeys.me(), updated);
       setUser(updated);
-      toast.success('Profile updated.');
+      toast.success('Perfil actualizado.');
     },
-    onError: () => toast.error('Failed to update profile.'),
+    onError: () => toast.error('No se pudo actualizar el perfil.'),
   });
 }
 
@@ -63,9 +63,9 @@ export function useCreateUser() {
     mutationFn: (data: CreateUserRequest) => usersApi.create(data).then((r) => r.data),
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: userKeys.lists() });
-      toast.success('User invited successfully.');
+      toast.success('Usuario invitado exitosamente.');
     },
-    onError: (error: unknown) => toastApiError(error, 'Failed to invite user.'),
+    onError: (error: unknown) => toastApiError(error, 'No se pudo invitar al usuario.'),
   });
 }
 
@@ -77,9 +77,9 @@ export function useUpdateUser() {
     onSuccess: (user) => {
       queryClient.invalidateQueries({ queryKey: userKeys.lists() });
       queryClient.setQueryData(userKeys.detail(user.id), user);
-      toast.success('User updated.');
+      toast.success('Usuario actualizado.');
     },
-    onError: () => toast.error('Failed to update user.'),
+    onError: () => toast.error('No se pudo actualizar el usuario.'),
   });
 }
 
@@ -89,16 +89,16 @@ export function useDeleteUser() {
     mutationFn: (id: string) => usersApi.remove(id),
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: userKeys.lists() });
-      toast.success('User removed.');
+      toast.success('Usuario eliminado.');
     },
-    onError: () => toast.error('Failed to remove user.'),
+    onError: () => toast.error('No se pudo eliminar el usuario.'),
   });
 }
 
 export function useResendInvite() {
   return useMutation({
     mutationFn: (id: string) => usersApi.resendInvite(id),
-    onSuccess: () => toast.success('Invitation resent.'),
-    onError: () => toast.error('Failed to resend invitation.'),
+    onSuccess: () => toast.success('Invitación reenviada.'),
+    onError: () => toast.error('No se pudo reenviar la invitación.'),
   });
 }

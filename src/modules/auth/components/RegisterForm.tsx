@@ -32,10 +32,10 @@ export function RegisterForm() {
     <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
       <div className="grid grid-cols-2 gap-4">
         <div className="space-y-2">
-          <Label htmlFor="firstName">First name</Label>
+          <Label htmlFor="firstName">Nombre</Label>
           <Input
             id="firstName"
-            placeholder="John"
+            placeholder="Juan"
             className={cn(errors.firstName && 'border-destructive')}
             {...register('firstName')}
           />
@@ -44,10 +44,10 @@ export function RegisterForm() {
           )}
         </div>
         <div className="space-y-2">
-          <Label htmlFor="lastName">Last name</Label>
+          <Label htmlFor="lastName">Apellido</Label>
           <Input
             id="lastName"
-            placeholder="Doe"
+            placeholder="Pérez"
             className={cn(errors.lastName && 'border-destructive')}
             {...register('lastName')}
           />
@@ -56,11 +56,11 @@ export function RegisterForm() {
       </div>
 
       <div className="space-y-2">
-        <Label htmlFor="email">Work email</Label>
+        <Label htmlFor="email">Correo de trabajo</Label>
         <Input
           id="email"
           type="email"
-          placeholder="you@company.com"
+          placeholder="tu@empresa.com"
           autoComplete="email"
           className={cn(errors.email && 'border-destructive')}
           {...register('email')}
@@ -69,10 +69,10 @@ export function RegisterForm() {
       </div>
 
       <div className="space-y-2">
-        <Label htmlFor="companyName">Company name</Label>
+        <Label htmlFor="companyName">Nombre de empresa</Label>
         <Input
           id="companyName"
-          placeholder="Acme Inc."
+          placeholder="Mi Empresa S.A."
           className={cn(errors.companyName && 'border-destructive')}
           {...register('companyName')}
         />
@@ -82,12 +82,12 @@ export function RegisterForm() {
       </div>
 
       <div className="space-y-2">
-        <Label htmlFor="password">Password</Label>
+        <Label htmlFor="password">Contraseña</Label>
         <div className="relative">
           <Input
             id="password"
             type={showPassword ? 'text' : 'password'}
-            placeholder="Min. 8 characters"
+            placeholder="Mín. 8 caracteres"
             autoComplete="new-password"
             className={cn('pr-10', errors.password && 'border-destructive')}
             {...register('password')}
@@ -96,7 +96,7 @@ export function RegisterForm() {
             type="button"
             onClick={() => setShowPassword((v) => !v)}
             className="absolute right-3 top-1/2 -translate-y-1/2 text-muted-foreground hover:text-foreground"
-            aria-label={showPassword ? 'Hide password' : 'Show password'}
+            aria-label={showPassword ? 'Ocultar contraseña' : 'Mostrar contraseña'}
           >
             {showPassword ? <EyeOff className="h-4 w-4" /> : <Eye className="h-4 w-4" />}
           </button>
@@ -105,7 +105,7 @@ export function RegisterForm() {
       </div>
 
       <div className="space-y-2">
-        <Label htmlFor="confirmPassword">Confirm password</Label>
+        <Label htmlFor="confirmPassword">Confirmar contraseña</Label>
         <Input
           id="confirmPassword"
           type="password"
@@ -121,13 +121,13 @@ export function RegisterForm() {
 
       <Button type="submit" className="w-full" disabled={isPending}>
         {isPending && <Loader2 className="mr-2 h-4 w-4 animate-spin" />}
-        Create account
+        Crear cuenta
       </Button>
 
       <p className="text-center text-sm text-muted-foreground">
-        Already have an account?{' '}
+        ¿Ya tienes cuenta?{' '}
         <Link href="/login" className="font-medium text-primary underline-offset-4 hover:underline">
-          Sign in
+          Iniciar sesión
         </Link>
       </p>
     </form>

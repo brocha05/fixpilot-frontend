@@ -20,16 +20,16 @@ import { toast } from 'sonner';
 
 const pwSchema = z
   .object({
-    currentPassword: z.string().min(1, 'Current password is required'),
+    currentPassword: z.string().min(1, 'La contraseña actual es requerida'),
     newPassword: z
       .string()
-      .min(8, 'Password must be at least 8 characters')
-      .regex(/[A-Z]/, 'Must contain at least one uppercase letter')
-      .regex(/[0-9]/, 'Must contain at least one number'),
+      .min(8, 'La contraseña debe tener al menos 8 caracteres')
+      .regex(/[A-Z]/, 'Debe contener al menos una mayúscula')
+      .regex(/[0-9]/, 'Debe contener al menos un número'),
     confirmPassword: z.string(),
   })
   .refine((d) => d.newPassword === d.confirmPassword, {
-    message: 'Passwords do not match',
+    message: 'Las contraseñas no coinciden',
     path: ['confirmPassword'],
   });
 
@@ -62,7 +62,7 @@ export default function SecuritySettingsPage() {
 
   async function handleDeleteAccount() {
     if (!deletePassword) {
-      toast.error('Please enter your password.');
+      toast.error('Por favor ingresa tu contraseña.');
       return;
     }
     setDeleting(true);
@@ -70,9 +70,9 @@ export default function SecuritySettingsPage() {
       await usersApi.remove(user!.id);
       logout();
       router.push('/login');
-      toast.success('Account deleted.');
+      toast.success('Cuenta eliminada.');
     } catch {
-      toast.error('Incorrect password or could not delete account.');
+      toast.error('Contraseña incorrecta o no se pudo eliminar la cuenta.');
     } finally {
       setDeleting(false);
       setDeleteOpen(false);
@@ -81,11 +81,11 @@ export default function SecuritySettingsPage() {
 
   return (
     <div className="space-y-6">
-      <PageHeader title="Security" description="Manage your password and account access.">
+      <PageHeader title="Seguridad" description="Administra tu contraseña y acceso a la cuenta.">
         <Button variant="ghost" size="sm" asChild>
           <Link href="/dashboard/settings">
             <ArrowLeft className="h-4 w-4" />
-            Back
+            Atrás
           </Link>
         </Button>
       </PageHeader>
@@ -96,16 +96,16 @@ export default function SecuritySettingsPage() {
           <CardHeader>
             <CardTitle className="text-base flex items-center gap-2">
               <Lock className="h-4 w-4" />
-              Change Password
+              Cambiar Contraseña
             </CardTitle>
             <CardDescription>
-              Use a strong password with letters, numbers, and symbols.
+              Usa una contraseña segura con letras, números y símbolos.
             </CardDescription>
           </CardHeader>
           <CardContent>
             <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
               <div className="space-y-1.5">
-                <Label htmlFor="currentPassword">Current password</Label>
+                <Label htmlFor="currentPassword">Contraseña actual</Label>
                 <div className="relative">
                   <Input
                     id="currentPassword"
@@ -127,7 +127,7 @@ export default function SecuritySettingsPage() {
               </div>
 
               <div className="space-y-1.5">
-                <Label htmlFor="newPassword">New password</Label>
+                <Label htmlFor="newPassword">Nueva contraseña</Label>
                 <div className="relative">
                   <Input
                     id="newPassword"
@@ -149,7 +149,7 @@ export default function SecuritySettingsPage() {
               </div>
 
               <div className="space-y-1.5">
-                <Label htmlFor="confirmPassword">Confirm new password</Label>
+                <Label htmlFor="confirmPassword">Confirmar nueva contraseña</Label>
                 <Input id="confirmPassword" type="password" {...register('confirmPassword')} />
                 {errors.confirmPassword && (
                   <p className="text-xs text-destructive">{errors.confirmPassword.message}</p>
@@ -158,7 +158,7 @@ export default function SecuritySettingsPage() {
 
               <div className="flex justify-end pt-2">
                 <Button type="submit" disabled={!isDirty || isPending}>
-                  {isPending ? 'Saving...' : 'Update password'}
+                  {isPending ? 'Guardando...' : 'Actualizar contraseña'}
                 </Button>
               </div>
             </form>
@@ -170,15 +170,15 @@ export default function SecuritySettingsPage() {
           <CardHeader>
             <CardTitle className="text-base flex items-center gap-2 text-destructive">
               <ShieldAlert className="h-4 w-4" />
-              Danger Zone
+              Zona de Peligro
             </CardTitle>
             <CardDescription>
-              Permanently delete your account and all associated data.
+              Elimina permanentemente tu cuenta y todos los datos asociados.
             </CardDescription>
           </CardHeader>
           <CardContent>
             <Button variant="destructive" size="sm" onClick={() => setDeleteOpen(true)}>
-              Delete my account
+              Eliminar mi cuenta
             </Button>
           </CardContent>
         </Card>
@@ -190,19 +190,19 @@ export default function SecuritySettingsPage() {
           setDeleteOpen(o);
           if (!o) setDeletePassword('');
         }}
-        title="Delete your account"
-        description="This action is permanent and cannot be undone. All your data will be deleted."
-        confirmLabel="Delete account"
+        title="Eliminar tu cuenta"
+        description="Esta acción es permanente y no se puede deshacer. Todos tus datos serán eliminados."
+        confirmLabel="Eliminar cuenta"
         variant="destructive"
         isLoading={deleting}
         onConfirm={handleDeleteAccount}
       >
         <div className="space-y-1.5 pt-2">
-          <Label htmlFor="del-pw">Enter your password to confirm</Label>
+          <Label htmlFor="del-pw">Ingresa tu contraseña para confirmar</Label>
           <Input
             id="del-pw"
             type="password"
-            placeholder="Your current password"
+            placeholder="Tu contraseña actual"
             value={deletePassword}
             onChange={(e) => setDeletePassword(e.target.value)}
           />

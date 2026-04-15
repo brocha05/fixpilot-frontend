@@ -38,9 +38,9 @@ export function useUpdateCompany() {
     onSuccess: (company) => {
       queryClient.setQueryData(companyKeys.current(), company);
       updateCurrentCompany(company);
-      toast.success('Company updated.');
+      toast.success('Empresa actualizada.');
     },
-    onError: () => toast.error('Failed to update company.'),
+    onError: () => toast.error('No se pudo actualizar la empresa.'),
   });
 }
 
@@ -53,9 +53,9 @@ export function useUploadLogo() {
     onSuccess: (data) => {
       updateCurrentCompany({ logoUrl: data.url });
       queryClient.invalidateQueries({ queryKey: companyKeys.current() });
-      toast.success('Logo updated.');
+      toast.success('Logo actualizado.');
     },
-    onError: () => toast.error('Failed to upload logo.'),
+    onError: () => toast.error('No se pudo subir el logo.'),
   });
 }
 
@@ -72,8 +72,8 @@ export function useInviteUser() {
     mutationFn: (data: InviteUserRequest) => companyApi.inviteUser(data),
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: companyKeys.members() });
-      toast.success('Invitation sent.');
+      toast.success('Invitación enviada.');
     },
-    onError: (error: unknown) => toastApiError(error, 'Failed to send invitation.'),
+    onError: (error: unknown) => toastApiError(error, 'No se pudo enviar la invitación.'),
   });
 }

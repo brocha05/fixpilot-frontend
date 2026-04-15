@@ -33,9 +33,9 @@ export function useDeactivateCompany() {
     mutationFn: (id: string) => adminApi.deactivateCompany(id).then((r) => r.data),
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: adminKeys.all });
-      toast.success('Company deactivated.');
+      toast.success('Empresa desactivada.');
     },
-    onError: () => toast.error('Failed to deactivate company.'),
+    onError: () => toast.error('No se pudo desactivar la empresa.'),
   });
 }
 
@@ -45,9 +45,9 @@ export function useReactivateCompany() {
     mutationFn: (id: string) => adminApi.reactivateCompany(id).then((r) => r.data),
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: adminKeys.all });
-      toast.success('Company reactivated.');
+      toast.success('Empresa reactivada.');
     },
-    onError: () => toast.error('Failed to reactivate company.'),
+    onError: () => toast.error('No se pudo reactivar la empresa.'),
   });
 }
 

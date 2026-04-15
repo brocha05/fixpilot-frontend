@@ -15,8 +15,8 @@ import { Skeleton } from '@/components/ui/skeleton';
 import { useMe, useUpdateMe } from '@/modules/users/hooks/useUsers';
 
 const schema = z.object({
-  firstName: z.string().min(1, 'First name is required'),
-  lastName: z.string().min(1, 'Last name is required'),
+  firstName: z.string().min(1, 'El nombre es requerido'),
+  lastName: z.string().min(1, 'El apellido es requerido'),
 });
 type FormData = z.infer<typeof schema>;
 
@@ -41,11 +41,11 @@ export default function ProfileSettingsPage() {
 
   return (
     <div className="space-y-6">
-      <PageHeader title="Profile" description="Update your personal information.">
+      <PageHeader title="Perfil" description="Actualiza tu información personal.">
         <Button variant="ghost" size="sm" asChild>
           <Link href="/dashboard/settings">
             <ArrowLeft className="h-4 w-4" />
-            Back
+            Atrás
           </Link>
         </Button>
       </PageHeader>
@@ -53,8 +53,8 @@ export default function ProfileSettingsPage() {
       <div className="max-w-lg">
         <Card>
           <CardHeader>
-            <CardTitle className="text-base">Personal Information</CardTitle>
-            <CardDescription>Your name is visible to other team members.</CardDescription>
+            <CardTitle className="text-base">Información Personal</CardTitle>
+            <CardDescription>Tu nombre es visible para otros miembros del equipo.</CardDescription>
           </CardHeader>
           <CardContent>
             {isLoading ? (
@@ -70,14 +70,14 @@ export default function ProfileSettingsPage() {
               <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
                 <div className="grid gap-4 sm:grid-cols-2">
                   <div className="space-y-1.5">
-                    <Label htmlFor="firstName">First name</Label>
+                    <Label htmlFor="firstName">Nombre</Label>
                     <Input id="firstName" {...register('firstName')} />
                     {errors.firstName && (
                       <p className="text-xs text-destructive">{errors.firstName.message}</p>
                     )}
                   </div>
                   <div className="space-y-1.5">
-                    <Label htmlFor="lastName">Last name</Label>
+                    <Label htmlFor="lastName">Apellido</Label>
                     <Input id="lastName" {...register('lastName')} />
                     {errors.lastName && (
                       <p className="text-xs text-destructive">{errors.lastName.message}</p>
@@ -86,22 +86,22 @@ export default function ProfileSettingsPage() {
                 </div>
 
                 <div className="space-y-1.5">
-                  <Label>Email address</Label>
+                  <Label>Correo electrónico</Label>
                   <Input value={me?.email ?? ''} disabled className="bg-muted/50" />
                   <p className="text-xs text-muted-foreground">
-                    Contact support to change your email address.
+                    Contacta soporte para cambiar tu correo.
                   </p>
                 </div>
 
                 <div className="space-y-1.5">
-                  <Label>Role</Label>
+                  <Label>Rol</Label>
                   <Input value={me?.role ?? ''} disabled className="bg-muted/50 capitalize" />
                 </div>
 
                 <div className="flex justify-end pt-2">
                   <Button type="submit" disabled={!isDirty || isPending}>
                     <Save className="h-4 w-4" />
-                    {isPending ? 'Saving...' : 'Save changes'}
+                    {isPending ? 'Guardando...' : 'Guardar cambios'}
                   </Button>
                 </div>
               </form>

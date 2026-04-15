@@ -2,7 +2,7 @@ import type { Metadata } from 'next';
 import { Zap } from 'lucide-react';
 import { RegisterForm } from '@/modules/auth/components/RegisterForm';
 
-export const metadata: Metadata = { title: 'Create account' };
+export const metadata: Metadata = { title: 'Crear cuenta' };
 
 export default function RegisterPage() {
   return (
@@ -12,9 +12,9 @@ export default function RegisterPage() {
           <div className="flex h-12 w-12 items-center justify-center rounded-xl bg-primary shadow-lg shadow-primary/25">
             <Zap className="h-6 w-6 text-primary-foreground" />
           </div>
-          <h1 className="mt-4 text-2xl font-bold tracking-tight">Create your account</h1>
+          <h1 className="mt-4 text-2xl font-bold tracking-tight">Crea tu cuenta</h1>
           <p className="mt-1 text-sm text-muted-foreground">
-            Start your 14-day free trial. No credit card required.
+            Comienza tu prueba gratuita de 14 días. Sin tarjeta de crédito.
           </p>
         </div>
 

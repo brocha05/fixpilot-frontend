@@ -12,7 +12,7 @@ import { Label } from '@/components/ui/label';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { useForgotPassword } from '@/modules/auth/hooks/useAuth';
 
-const schema = z.object({ email: z.string().email('Valid email required') });
+const schema = z.object({ email: z.string().email('Correo electrónico válido requerido') });
 type FormData = z.infer<typeof schema>;
 
 export default function ForgotPasswordPage() {
@@ -42,11 +42,11 @@ export default function ForgotPasswordPage() {
 
         <Card>
           <CardHeader className="text-center">
-            <CardTitle>Forgot password?</CardTitle>
+            <CardTitle>¿Olvidaste tu contraseña?</CardTitle>
             <CardDescription>
               {sent
-                ? 'Check your inbox for reset instructions.'
-                : "Enter your email and we'll send you a reset link."}
+                ? 'Revisa tu bandeja de entrada.'
+                : 'Ingresa tu correo y te enviaremos un enlace para restablecer tu contraseña.'}
             </CardDescription>
           </CardHeader>
           <CardContent>
@@ -56,20 +56,20 @@ export default function ForgotPasswordPage() {
                   <CheckCircle2 className="h-7 w-7 text-emerald-600" />
                 </div>
                 <p className="text-center text-sm text-muted-foreground">
-                  If an account exists with that email, you&apos;ll receive instructions shortly.
+                  Si existe una cuenta con ese correo, recibirás instrucciones en breve.
                 </p>
               </div>
             ) : (
               <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
                 <div className="space-y-1.5">
-                  <Label htmlFor="email">Email address</Label>
+                  <Label htmlFor="email">Correo electrónico</Label>
                   <div className="relative">
                     <Mail className="absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-muted-foreground" />
                     <Input
                       id="email"
                       type="email"
                       className="pl-9"
-                      placeholder="you@company.com"
+                      placeholder="tu@empresa.com"
                       {...register('email')}
                     />
                   </div>
@@ -78,7 +78,7 @@ export default function ForgotPasswordPage() {
                   )}
                 </div>
                 <Button type="submit" className="w-full" disabled={isPending}>
-                  {isPending ? 'Sending...' : 'Send reset link'}
+                  {isPending ? 'Enviando...' : 'Enviar enlace'}
                 </Button>
               </form>
             )}
@@ -91,7 +91,7 @@ export default function ForgotPasswordPage() {
             className="inline-flex items-center gap-1 text-sm text-muted-foreground hover:text-foreground"
           >
             <ArrowLeft className="h-3.5 w-3.5" />
-            Back to sign in
+            Volver al inicio de sesión
           </Link>
         </div>
       </div>

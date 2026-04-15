@@ -40,7 +40,7 @@ export function useCheckout() {
     onSuccess: ({ url }) => {
       window.location.href = url;
     },
-    onError: () => toast.error('Failed to start checkout. Please try again.'),
+    onError: () => toast.error('No se pudo iniciar el pago. Intenta de nuevo.'),
   });
 }
 
@@ -52,7 +52,7 @@ export function useBillingPortal() {
     onSuccess: ({ url }) => {
       window.location.href = url;
     },
-    onError: () => toast.error('Failed to open billing portal.'),
+    onError: () => toast.error('No se pudo abrir el portal de facturación.'),
   });
 }
 
@@ -73,9 +73,9 @@ export function useCancelSubscription() {
     mutationFn: () => billingApi.cancelSubscription().then((r) => r.data),
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: billingKeys.subscription() });
-      toast.success('Subscription will cancel at the end of the billing period.');
+      toast.success('La suscripción se cancelará al final del período de facturación.');
     },
-    onError: () => toast.error('Failed to cancel subscription.'),
+    onError: () => toast.error('No se pudo cancelar la suscripción.'),
   });
 }
 
@@ -87,8 +87,8 @@ export function useResumeSubscription() {
     mutationFn: () => billingApi.resumeSubscription().then((r) => r.data),
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: billingKeys.subscription() });
-      toast.success('Subscription resumed.');
+      toast.success('Suscripción reanudada.');
     },
-    onError: () => toast.error('Failed to resume subscription.'),
+    onError: () => toast.error('No se pudo reanudar la suscripción.'),
   });
 }

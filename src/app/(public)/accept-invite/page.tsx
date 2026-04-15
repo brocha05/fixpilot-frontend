@@ -15,17 +15,17 @@ import Link from 'next/link';
 
 const schema = z
   .object({
-    firstName: z.string().min(1, 'Required'),
-    lastName: z.string().min(1, 'Required'),
+    firstName: z.string().min(1, 'Requerido'),
+    lastName: z.string().min(1, 'Requerido'),
     password: z
       .string()
-      .min(8, 'At least 8 characters')
-      .regex(/[A-Z]/, 'Must contain uppercase')
-      .regex(/[0-9]/, 'Must contain a number'),
+      .min(8, 'Al menos 8 caracteres')
+      .regex(/[A-Z]/, 'Debe contener una mayúscula')
+      .regex(/[0-9]/, 'Debe contener un número'),
     confirmPassword: z.string(),
   })
   .refine((d) => d.password === d.confirmPassword, {
-    message: 'Passwords do not match',
+    message: 'Las contraseñas no coinciden',
     path: ['confirmPassword'],
   });
 
@@ -51,9 +51,9 @@ export default function AcceptInvitePage() {
         <Card className="w-full max-w-sm">
           <CardContent className="py-8 text-center">
             <p className="text-sm text-muted-foreground">
-              Invalid invitation link.{' '}
+              Enlace de invitación inválido.{' '}
               <Link href="/login" className="text-primary underline">
-                Sign in instead
+                Iniciar sesión
               </Link>
             </p>
           </CardContent>
@@ -73,8 +73,8 @@ export default function AcceptInvitePage() {
 
         <Card>
           <CardHeader className="text-center">
-            <CardTitle>Accept invitation</CardTitle>
-            <CardDescription>Create your account to join the workspace.</CardDescription>
+            <CardTitle>Aceptar invitación</CardTitle>
+            <CardDescription>Crea tu cuenta para unirte al espacio de trabajo.</CardDescription>
           </CardHeader>
           <CardContent>
             <form
@@ -90,22 +90,22 @@ export default function AcceptInvitePage() {
             >
               <div className="grid gap-4 sm:grid-cols-2">
                 <div className="space-y-1.5">
-                  <Label htmlFor="firstName">First name</Label>
-                  <Input id="firstName" placeholder="Jane" {...register('firstName')} />
+                  <Label htmlFor="firstName">Nombre</Label>
+                  <Input id="firstName" placeholder="Juan" {...register('firstName')} />
                   {errors.firstName && (
                     <p className="text-xs text-destructive">{errors.firstName.message}</p>
                   )}
                 </div>
                 <div className="space-y-1.5">
-                  <Label htmlFor="lastName">Last name</Label>
-                  <Input id="lastName" placeholder="Doe" {...register('lastName')} />
+                  <Label htmlFor="lastName">Apellido</Label>
+                  <Input id="lastName" placeholder="Pérez" {...register('lastName')} />
                   {errors.lastName && (
                     <p className="text-xs text-destructive">{errors.lastName.message}</p>
                   )}
                 </div>
               </div>
               <div className="space-y-1.5">
-                <Label htmlFor="password">Password</Label>
+                <Label htmlFor="password">Contraseña</Label>
                 <div className="relative">
                   <Input
                     id="password"
@@ -126,14 +126,14 @@ export default function AcceptInvitePage() {
                 )}
               </div>
               <div className="space-y-1.5">
-                <Label htmlFor="confirmPassword">Confirm password</Label>
+                <Label htmlFor="confirmPassword">Confirmar contraseña</Label>
                 <Input id="confirmPassword" type="password" {...register('confirmPassword')} />
                 {errors.confirmPassword && (
                   <p className="text-xs text-destructive">{errors.confirmPassword.message}</p>
                 )}
               </div>
               <Button type="submit" className="w-full" disabled={isPending}>
-                {isPending ? 'Creating account...' : 'Create account'}
+                {isPending ? 'Creando cuenta...' : 'Crear cuenta'}
               </Button>
             </form>
           </CardContent>

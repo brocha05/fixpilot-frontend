@@ -27,6 +27,13 @@ function subStatusColor(status: string) {
   }
 }
 
+const subscriptionStatusLabel: Record<string, string> = {
+  ACTIVE: 'Activo',
+  TRIALING: 'En prueba',
+  PAST_DUE: 'Vencida',
+  CANCELED: 'Cancelado',
+};
+
 export default function AdminDashboardPage() {
   const { data: companiesData, isLoading: compLoading } = useAdminCompanies({ limit: 5 });
   const { data: subsData, isLoading: subsLoading } = useAdminSubscriptions({ limit: 5 });
@@ -39,40 +46,40 @@ export default function AdminDashboardPage() {
 
   return (
     <div className="space-y-8">
-      <PageHeader title="Admin Overview" description="Platform-wide metrics and management.">
+      <PageHeader title="Panel de Administración" description="Métricas y gestión de la plataforma.">
         <div className="flex items-center gap-1.5 rounded-lg bg-primary/10 px-3 py-1.5">
           <ShieldCheck className="h-3.5 w-3.5 text-primary" />
-          <span className="text-xs font-semibold text-primary">Super Admin</span>
+          <span className="text-xs font-semibold text-primary">Super Administrador</span>
         </div>
       </PageHeader>
 
       {/* Stats */}
       <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
         <StatCard
-          title="Total Companies"
+          title="Total de Empresas"
           value={compLoading ? '—' : totalCompanies}
           icon={Building2}
           isLoading={compLoading}
         />
         <StatCard
-          title="Subscriptions"
+          title="Suscripciones"
           value={subsLoading ? '—' : totalSubs}
           icon={CreditCard}
           isLoading={subsLoading}
         />
         <StatCard
-          title="Active / Trialing"
+          title="Activos / En Prueba"
           value={subsLoading ? '—' : activeCount}
-          description="paying customers"
+          description="clientes activos"
           icon={TrendingUp}
           isLoading={subsLoading}
         />
         <StatCard
-          title="At Risk"
+          title="En Riesgo"
           value={
             subsLoading ? '—' : (subsData?.items?.filter((s) => s.status === 'PAST_DUE').length ?? 0)
           }
-          description="past due"
+          description="vencidas"
           icon={Users}
           isLoading={subsLoading}
         />
@@ -83,12 +90,12 @@ export default function AdminDashboardPage() {
         <Card>
           <CardHeader className="flex flex-row items-center justify-between pb-3">
             <div>
-              <CardTitle className="text-base">Recent Companies</CardTitle>
-              <CardDescription>Latest registered workspaces</CardDescription>
+              <CardTitle className="text-base">Empresas Recientes</CardTitle>
+              <CardDescription>Últimos espacios de trabajo registrados</CardDescription>
             </div>
             <Button variant="ghost" size="sm" asChild>
               <Link href="/admin/companies" className="flex items-center gap-1 text-xs">
-                View all <ArrowRight className="h-3 w-3" />
+                Ver todos <ArrowRight className="h-3 w-3" />
               </Link>
             </Button>
           </CardHeader>
@@ -123,13 +130,13 @@ export default function AdminDashboardPage() {
                   </p>
                   {co.deletedAt && (
                     <Badge variant="destructive" className="shrink-0 text-[10px]">
-                      Deleted
+                      Eliminada
                     </Badge>
                   )}
                 </Link>
               ))
             ) : (
-              <p className="py-8 text-center text-sm text-muted-foreground">No companies yet.</p>
+              <p className="py-8 text-center text-sm text-muted-foreground">Sin empresas aún.</p>
             )}
           </CardContent>
         </Card>
@@ -138,12 +145,12 @@ export default function AdminDashboardPage() {
         <Card>
           <CardHeader className="flex flex-row items-center justify-between pb-3">
             <div>
-              <CardTitle className="text-base">Recent Subscriptions</CardTitle>
-              <CardDescription>Latest subscription activity</CardDescription>
+              <CardTitle className="text-base">Suscripciones Recientes</CardTitle>
+              <CardDescription>Actividad reciente de suscripciones</CardDescription>
             </div>
             <Button variant="ghost" size="sm" asChild>
               <Link href="/admin/subscriptions" className="flex items-center gap-1 text-xs">
-                View all <ArrowRight className="h-3 w-3" />
+                Ver todas <ArrowRight className="h-3 w-3" />
               </Link>
             </Button>
           </CardHeader>
@@ -168,7 +175,7 @@ export default function AdminDashboardPage() {
                   className="flex items-center justify-between border-b px-6 py-3.5 last:border-0"
                 >
                   <div>
-                    <p className="text-sm font-medium">{sub.company?.name ?? 'Unknown company'}</p>
+                    <p className="text-sm font-medium">{sub.company?.name ?? 'Empresa desconocida'}</p>
                     <p className="text-xs text-muted-foreground">
                       {sub.plan?.name ?? '—'} · {sub.plan ? formatCurrency(sub.plan.price) : '—'}
                     </p>
@@ -179,12 +186,12 @@ export default function AdminDashboardPage() {
                       subStatusColor(sub.status)
                     )}
                   >
-                    {sub.status}
+                    {subscriptionStatusLabel[sub.status?.toUpperCase()] ?? sub.status}
                   </span>
                 </div>
               ))
             ) : (
-              <p className="py-8 text-center text-sm text-muted-foreground">No subscriptions.</p>
+              <p className="py-8 text-center text-sm text-muted-foreground">Sin suscripciones.</p>
             )}
           </CardContent>
         </Card>

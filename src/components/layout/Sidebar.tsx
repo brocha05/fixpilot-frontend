@@ -17,6 +17,7 @@ import {
   Receipt,
   UserCircle,
   Package,
+  MapPin,
 } from 'lucide-react';
 import { useState } from 'react';
 import { cn } from '@/lib/utils/cn';
@@ -101,6 +102,7 @@ export function Sidebar() {
       items: [
         { href: '/orders', label: 'Órdenes', icon: Wrench },
         { href: '/customers', label: 'Clientes', icon: UserCircle },
+        { href: '/branches', label: 'Sucursales', icon: MapPin },
         { href: '/expenses', label: 'Gastos', icon: Receipt },
       ],
     },

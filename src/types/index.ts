@@ -205,6 +205,29 @@ export interface RepairOrderCustomer {
   email: string | null;
 }
 
+// ─── Branch ───────────────────────────────────────────────────────────────────
+
+export type BranchStatus = 'ACTIVE' | 'INACTIVE';
+
+export interface Branch {
+  id: string;
+  companyId: string;
+  name: string;
+  phone: string | null;
+  email: string | null;
+  address: string;
+  city: string;
+  state: string;
+  zipCode: string | null;
+  country: string;
+  status: BranchStatus;
+  isMain: boolean;
+  notes: string | null;
+  createdAt: string;
+  updatedAt: string;
+  deletedAt?: string | null;
+}
+
 export interface RepairOrder {
   id: string;
   companyId: string;
@@ -221,6 +244,8 @@ export interface RepairOrder {
   updatedAt: string;
   completedAt: string | null;
   approvedAt: string | null;
+  branchId?: string | null;
+  branch?: { id: string; name: string; city: string } | null;
   customer?: RepairOrderCustomer | null;
   images?: RepairOrderImage[];
   comments?: RepairOrderComment[];

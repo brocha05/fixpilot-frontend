@@ -18,6 +18,8 @@ import {
   UserCircle,
   Package,
   MapPin,
+  ShoppingCart,
+  Boxes,
 } from 'lucide-react';
 import { useState } from 'react';
 import { cn } from '@/lib/utils/cn';
@@ -103,6 +105,8 @@ export function Sidebar() {
         { href: '/orders', label: 'Órdenes', icon: Wrench },
         { href: '/customers', label: 'Clientes', icon: UserCircle },
         { href: '/branches', label: 'Sucursales', icon: MapPin },
+        { href: '/inventory', label: 'Inventario', icon: Boxes },
+        { href: '/sales', label: 'Ventas', icon: ShoppingCart },
         { href: '/expenses', label: 'Gastos', icon: Receipt },
       ],
     },

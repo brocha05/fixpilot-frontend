@@ -49,7 +49,7 @@ export default function OrdersPage() {
     urgencyLevel: urgencyFilter !== 'ALL' ? urgencyFilter : undefined,
   });
 
-  const orders = data?.items ?? [];
+  const orders = data?.data ?? [];
   const total = data?.total ?? 0;
   const pages = data?.pages ?? 1;
 

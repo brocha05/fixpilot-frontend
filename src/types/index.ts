@@ -7,7 +7,7 @@ export interface ApiResponse<T> {
 }
 
 export interface PaginatedResponse<T> {
-  items: T[];
+  data: T[];
   total: number;
   page: number;
   limit: number;
@@ -261,6 +261,62 @@ export interface Expense {
   createdAt: string;
 }
 
+// ─── Inventory ────────────────────────────────────────────────────────────────
+
+export type ProductStatus = 'ACTIVE' | 'INACTIVE';
+
+export interface Product {
+  id: string;
+  companyId: string;
+  branchId: string | null;
+  name: string;
+  description: string | null;
+  sku: string | null;
+  category: string | null;
+  price: number;
+  cost: number;
+  stock: number;
+  minStock: number;
+  unit: string;
+  status: ProductStatus;
+  isLowStock: boolean;
+  createdAt: string;
+  updatedAt: string;
+}
+
+// ─── Sales ────────────────────────────────────────────────────────────────────
+
+export type SaleStatus = 'COMPLETED' | 'CANCELLED' | 'REFUNDED';
+export type PaymentMethod = 'CASH' | 'CARD' | 'TRANSFER' | 'OTHER';
+
+export interface SaleItem {
+  id: string;
+  productId: string;
+  productName: string;
+  productSku: string | null;
+  productUnit: string;
+  quantity: number;
+  unitPrice: number;
+  subtotal: number;
+}
+
+export interface Sale {
+  id: string;
+  companyId: string;
+  branchId: string | null;
+  customerId: string | null;
+  customer: { id: string; name: string; phone: string } | null;
+  totalAmount: number;
+  discount: number;
+  finalAmount: number;
+  paymentMethod: PaymentMethod;
+  status: SaleStatus;
+  notes: string | null;
+  items: SaleItem[];
+  createdAt: string;
+  updatedAt: string;
+}
+
 // ─── Analytics ────────────────────────────────────────────────────────────────
 
 export interface RevenueSummary {
@@ -282,10 +338,18 @@ export interface ExpenseSummary {
   period: { year: number; month?: number };
 }
 
+export interface SalesSummary {
+  totalSales: number;
+  salesCount: number;
+  period: { year: number; month?: number };
+}
+
 export interface DashboardSummary {
   revenue: RevenueSummary;
   repairs: RepairStats;
   expenses: ExpenseSummary;
+  sales: SalesSummary;
+  lowStockCount: number;
   netProfit: number;
 }
 

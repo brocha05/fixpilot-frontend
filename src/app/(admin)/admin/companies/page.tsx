@@ -167,7 +167,7 @@ export default function AdminCompaniesPage() {
 
       <DataTable
         columns={columns}
-        data={data?.items ?? []}
+        data={data?.data ?? []}
         isLoading={isLoading}
         totalPages={data?.pages}
         currentPage={pagination.page}

@@ -47,7 +47,7 @@ export default function CustomersPage() {
   const { mutate: updateCustomer, isPending: updating } = useUpdateCustomer();
   const { mutate: deleteCustomerMutation, isPending: deleting } = useDeleteCustomer();
 
-  const customers = data?.items ?? [];
+  const customers = data?.data ?? [];
   const total = data?.total ?? 0;
   const pages = data?.pages ?? 1;
 

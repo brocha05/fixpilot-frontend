@@ -94,7 +94,7 @@ export default function ExpensesPage() {
   const { mutate: createExpense, isPending: creating } = useCreateExpense();
   const { mutate: deleteExpenseMutation, isPending: deleting } = useDeleteExpense();
 
-  const expenses = data?.items ?? [];
+  const expenses = data?.data ?? [];
   const total = data?.total ?? 0;
   const pages = data?.pages ?? 1;
 

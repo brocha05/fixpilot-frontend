@@ -49,14 +49,28 @@ const processQueue = (error: unknown, token: string | null = null) => {
 
 apiClient.interceptors.response.use(
   (response: AxiosResponse) => {
-    // Unwrap backend's ResponseInterceptor envelope: { success: true, data: T, meta: {...} }
+    const body = response.data;
     if (
-      response.data !== null &&
-      typeof response.data === 'object' &&
-      response.data.success === true &&
-      'data' in response.data
+      body !== null &&
+      typeof body === 'object' &&
+      body.success === true &&
+      'data' in body
     ) {
-      response.data = response.data.data;
+      const { data, meta } = body;
+
+      // Paginated response: data is array + meta has pagination fields
+      if (Array.isArray(data) && meta && typeof meta.total === 'number') {
+        response.data = {
+          data,
+          total: meta.total,
+          page: meta.page,
+          limit: meta.limit,
+          pages: meta.totalPages,
+        };
+      } else {
+        // Single resource response
+        response.data = data;
+      }
     }
     return response;
   },

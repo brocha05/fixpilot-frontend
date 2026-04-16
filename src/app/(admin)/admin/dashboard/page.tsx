@@ -42,7 +42,7 @@ export default function AdminDashboardPage() {
   const totalSubs = subsData?.total ?? 0;
 
   const activeCount =
-    subsData?.items?.filter((s) => s.status === 'ACTIVE' || s.status === 'TRIALING').length ?? 0;
+    subsData?.data?.filter((s) => s.status === 'ACTIVE' || s.status === 'TRIALING').length ?? 0;
 
   return (
     <div className="space-y-8">
@@ -77,7 +77,7 @@ export default function AdminDashboardPage() {
         <StatCard
           title="En Riesgo"
           value={
-            subsLoading ? '—' : (subsData?.items?.filter((s) => s.status === 'PAST_DUE').length ?? 0)
+            subsLoading ? '—' : (subsData?.data?.filter((s) => s.status === 'PAST_DUE').length ?? 0)
           }
           description="vencidas"
           icon={Users}
@@ -111,8 +111,8 @@ export default function AdminDashboardPage() {
                   <Skeleton className="h-4 w-16" />
                 </div>
               ))
-            ) : companiesData?.items?.length ? (
-              companiesData.items.map((co) => (
+            ) : companiesData?.data?.length ? (
+              companiesData.data.map((co) => (
                 <Link
                   key={co.id}
                   href={`/admin/companies/${co.id}`}
@@ -168,8 +168,8 @@ export default function AdminDashboardPage() {
                   <Skeleton className="h-5 w-16 rounded-full" />
                 </div>
               ))
-            ) : subsData?.items?.length ? (
-              subsData.items.map((sub) => (
+            ) : subsData?.data?.length ? (
+              subsData.data.map((sub) => (
                 <div
                   key={sub.id}
                   className="flex items-center justify-between border-b px-6 py-3.5 last:border-0"

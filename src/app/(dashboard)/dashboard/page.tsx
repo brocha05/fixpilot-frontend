@@ -9,6 +9,8 @@ import {
   DollarSign,
   AlertCircle,
   CheckCircle2,
+  ShoppingCart,
+  PackageX,
 } from 'lucide-react';
 import { StatCard } from '@/components/shared/StatCard';
 import { PageHeader } from '@/components/shared/PageHeader';
@@ -68,7 +70,7 @@ export default function DashboardPage() {
         description="Resumen de tu taller de hoy."
       />
 
-      {/* KPI Stats */}
+      {/* KPI Stats — row 1 */}
       <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
         <StatCard
           title="Ingresos del mes"
@@ -78,10 +80,10 @@ export default function DashboardPage() {
           isLoading={summaryLoading}
         />
         <StatCard
-          title="Ingreso pendiente"
-          value={summaryLoading ? '—' : formatMXN(summary?.revenue.pendingRevenue ?? 0)}
-          description="en órdenes activas"
-          icon={Clock}
+          title="Ventas del mes"
+          value={summaryLoading ? '—' : formatMXN(summary?.sales.totalSales ?? 0)}
+          description={`${summary?.sales.salesCount ?? 0} ventas registradas`}
+          icon={ShoppingCart}
           isLoading={summaryLoading}
         />
         <StatCard
@@ -125,9 +127,9 @@ export default function DashboardPage() {
                   </div>
                 ))}
               </div>
-            ) : recentOrders?.items?.length ? (
+            ) : recentOrders?.data?.length ? (
               <div className="divide-y">
-                {recentOrders.items.map((order) => (
+                {recentOrders.data.map((order) => (
                   <Link
                     key={order.id}
                     href={`/orders/${order.id}`}
@@ -200,7 +202,7 @@ export default function DashboardPage() {
       </div>
 
       {/* Quick metrics row */}
-      <div className="grid gap-4 sm:grid-cols-3">
+      <div className="grid gap-4 sm:grid-cols-4">
         <Card className="flex items-center gap-4 p-5">
           <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-emerald-100 dark:bg-emerald-900/30">
             <CheckCircle2 className="h-5 w-5 text-emerald-600 dark:text-emerald-400" />
@@ -240,6 +242,19 @@ export default function DashboardPage() {
               size="lg"
               className="!text-2xl !font-bold text-foreground"
             />
+          </div>
+        </Card>
+
+        <Card className="flex items-center gap-4 p-5">
+          <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-orange-100 dark:bg-orange-900/30">
+            <PackageX className="h-5 w-5 text-orange-600 dark:text-orange-400" />
+          </div>
+          <div>
+            <p className="text-xs text-muted-foreground">Stock bajo</p>
+            <p className="text-2xl font-bold">
+              {summaryLoading ? '—' : (summary?.lowStockCount ?? 0)}
+            </p>
+            <p className="text-[10px] text-muted-foreground">productos</p>
           </div>
         </Card>
       </div>
